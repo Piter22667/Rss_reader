@@ -1,0 +1,149 @@
+:root {
+  --line: #d9d9dd;
+  --muted: #747480;
+  --bg: #fafafa;
+  --dark: #29292b;
+  --accent: #6b47c7;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: #202024;
+}
+
+.card {
+  width: min(400px, calc(100vw - 32px));
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  padding: 36px 32px 32px;
+}
+
+h1 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  letter-spacing: -.5px;
+}
+
+.subtitle {
+  margin: 0 0 26px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #3e3e46;
+}
+
+.field {
+  width: 100%;
+  height: 44px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+  font: inherit;
+  color: inherit;
+  outline: none;
+}
+
+.auth-login .field { margin-bottom: 14px; }
+.auth-register .field { margin-bottom: 4px; }
+
+.field:focus {
+  border-color: #8b78bd;
+  box-shadow: 0 0 0 3px #ede9fb;
+}
+
+.field-error {
+  border-color: #e8a09a !important;
+}
+
+.field-wrap {
+  margin-bottom: 14px;
+}
+
+.err-msg {
+  font-size: 12px;
+  color: #a43a2b;
+  margin-top: 4px;
+}
+
+.btn {
+  width: 100%;
+  height: 44px;
+  border: none;
+  border-radius: 9px;
+  background: var(--dark);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.auth-login .btn { margin-top: 4px; }
+.auth-register .btn { margin-top: 6px; }
+
+.btn:hover { background: #424246; }
+
+.alert {
+  padding: 10px 13px;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+
+.alert-error {
+  border: 1px solid #f0c7c1;
+  background: #fff4f2;
+  color: #a43a2b;
+}
+
+.alert-success {
+  border: 1px solid #c1dfc7;
+  background: #f2faf4;
+  color: #2b7a43;
+}
+
+.footer-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer-link a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-link a:hover { text-decoration: underline; }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -.4px;
+}
