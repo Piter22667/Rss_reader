@@ -1,0 +1,75 @@
+package org.example.rss.controller;
+
+import jakarta.validation.Valid;
+import org.example.rss.dto.FeedSourceForm;
+import org.example.rss.model.FeedSource;
+import org.example.rss.service.FeedSourceService;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.security.Principal;
+import java.util.List;
+
+@Controller
+public class FeedSourceController {
+    private final FeedSourceService feedSourceService;
+
+    public FeedSourceController(FeedSourceService feedSourceService) {
+        this.feedSourceService = feedSourceService;
+    }
+
+    @GetMapping("/")
+    public String home(@RequestParam(required = false) Long feedId, Principal principal, Model model) {
+        model.addAttribute("form", new FeedSourceForm());
+        populatePage(model, principal.getName(), feedId);
+        return "home";
+    }
+
+    @PostMapping("/feeds")
+    public String add(@Valid @ModelAttribute("form") FeedSourceForm form, BindingResult bindingResult,
+                      Principal principal, Model model, RedirectAttributes redirectAttributes) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                FeedSource source = feedSourceService.add(form, principal.getName());
+                redirectAttributes.addAttribute("feedId", source.getId());
+                redirectAttributes.addFlashAttribute("success", "RSS-джерело додано");
+                return "redirect:/";
+            } catch (FeedSourceService.DuplicateFeedSourceException ex) {
+                bindingResult.rejectValue("url", "feed.duplicate", ex.getMessage());
+            } catch (DataIntegrityViolationException ex) {
+                // The database also prevents duplicates submitted concurrently.
+                if (!isDuplicateUrl(ex)) throw ex;
+                bindingResult.rejectValue("url", "feed.duplicate", "Це RSS-джерело вже є у вашому списку");
+            }
+        }
+        populatePage(model, principal.getName(), null);
+        return "home";
+    }
+
+    @PostMapping("/feeds/{id}/delete")
+    public String delete(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes) {
+        feedSourceService.delete(id, principal.getName());
+        redirectAttributes.addFlashAttribute("success", "RSS-джерело видалено");
+        return "redirect:/";
+    }
+
+    private void populatePage(Model model, String email, Long feedId) {
+        List<FeedSource> sources = feedSourceService.list(email);
+        FeedSource selected = feedId == null
+                ? (sources.isEmpty() ? null : sources.get(0))
+                : feedSourceService.findOwned(feedId, email);
+        model.addAttribute("sources", sources);
+        model.addAttribute("selectedSource", selected);
+        model.addAttribute("email", email);
+    }
+
+    private boolean isDuplicateUrl(Throwable exception) {
+        for (Throwable cause = exception; cause != null; cause = cause.getCause()) {
+            if (cause.getMessage() != null && cause.getMessage().contains("uq_feed_sources_user_url")) return true;
+        }
+        return false;
+    }
+}
