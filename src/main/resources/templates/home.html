@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Мої джерела — RSS Reader</title>
+  <link rel="stylesheet" th:href="@{/css/auth.css}">
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body class="home">
+<div class="workspace">
+  <header class="topbar">
+    <a class="brand-name brand-link" th:href="@{/}">RSS Reader</a>
+    <div class="account">
+      <span class="account-email" th:text="${email}"></span>
+      <form th:action="@{/logout}" method="post">
+        <button class="btn btn-secondary" type="submit">Вийти</button>
+      </form>
+    </div>
+  </header>
+  <div th:if="${success}" class="alert alert-success" role="status" th:text="${success}"></div>
+  <div class="layout">
+    <aside class="panel sources-panel" aria-label="Керування RSS-джерелами">
+      <div class="section-heading">
+        <h1>Мої джерела</h1>
+        <span class="count" th:text="${#lists.size(sources)}"></span>
+      </div>
+      <p class="subtitle">Зберігайте улюблені RSS та Atom стрічки.</p>
+      <ul class="source-list" th:if="${!#lists.isEmpty(sources)}">
+        <li th:each="source : ${sources}" class="source-row"
+            th:classappend="${selectedSource != null and selectedSource.id == source.id} ? 'selected'">
+          <a class="source-link" th:href="@{/(feedId=${source.id})}"
+             th:attr="aria-current=${selectedSource != null and selectedSource.id == source.id ? 'page' : null}">
+            <strong th:text="${source.name}"></strong>
+            <span th:text="${source.url}"></span>
+          </a>
+          <form th:action="@{/feeds/{id}/delete(id=${source.id})}" method="post"
+                onsubmit="return confirm('Видалити це джерело разом зі статтями, вподобаннями та AI-підсумками?');">
+            <button class="delete-button" type="submit"
+                    th:attr="aria-label=${'Видалити джерело ' + source.name}">Видалити</button>
+          </form>
+        </li>
+      </ul>
+      <p class="empty-list" th:if="${#lists.isEmpty(sources)}">У вас ще немає RSS-джерел. Додайте перше нижче.</p>
+      <section class="add-source">
+        <h2>Додати джерело</h2>
+        <form th:action="@{/feeds}" th:object="${form}" method="post" novalidate>
+          <div class="field-wrap">
+            <label for="name">Назва</label>
+            <input id="name" class="field" th:field="*{name}" maxlength="255"
+                   placeholder="Наприклад, Новини технологій"
+                   th:classappend="${#fields.hasErrors('name')} ? 'field-error'">
+            <div class="err-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+          </div>
+          <div class="field-wrap">
+            <label for="url">RSS URL</label>
+            <input id="url" class="field" th:field="*{url}" type="url" maxlength="2048"
+                   placeholder="https://example.com/feed"
+                   th:classappend="${#fields.hasErrors('url') or #fields.hasErrors('validUrl')} ? 'field-error'">
+            <div class="err-msg" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></div>
+            <div class="err-msg" th:if="${#fields.hasErrors('validUrl')}" th:errors="*{validUrl}"></div>
+          </div>
+          <button class="btn" type="submit">Додати джерело</button>
+          <p class="form-note">URL зберігається без завантаження статей.</p>
+        </form>
+      </section>
+    </aside>
+    <main class="panel content-panel">
+      <th:block th:if="${selectedSource != null}">
+        <p class="eyebrow">Вибране джерело</p>
+        <h2 class="feed-title" th:text="${selectedSource.name}"></h2>
+        <p class="feed-url" th:text="${selectedSource.url}"></p>
+        <div class="empty-content">
+          <span class="empty-icon" aria-hidden="true">☰</span>
+          <h3>Статті ще не завантажено</h3>
+          <p>Джерело збережено. Статті з’являться після підключення імпорту RSS та Atom.</p>
+        </div>
+      </th:block>
+      <div class="empty-content welcome" th:if="${selectedSource == null}">
+        <span class="empty-icon" aria-hidden="true">＋</span>
+        <h2>Ваші новини в одному місці</h2>
+        <p>Додайте RSS-джерело у формі поруч, щоб почати.</p>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>
