@@ -1,11 +1,13 @@
 package org.example.rss.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.Instant;
 
 @Entity
 @Table(name = "feed_sources")
+@Data
 public class FeedSource {
 
     @Id
@@ -21,6 +23,20 @@ public class FeedSource {
 
     @Column(nullable = false, length = 2048)
     private String url;
+
+    public String getFaviconUrl() {
+        if (url == null || url.isBlank()) return null;
+        try {
+            java.net.URI uri = java.net.URI.create(url);
+            if (uri.getHost() != null && uri.getUserInfo() == null
+                    && ("https".equalsIgnoreCase(uri.getScheme()) || "http".equalsIgnoreCase(uri.getScheme()))) {
+                return uri.resolve("/favicon.ico").toString();
+            }
+        } catch (IllegalArgumentException ex) {
+            // Older sources without valid URLs display the placeholder.
+        }
+        return null;
+    }
 
     @Column(name = "is_active_for_scheduler", nullable = false)
     private boolean activeForScheduler = true;
