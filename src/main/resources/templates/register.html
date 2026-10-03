@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register — RSS Reader</title>
+  <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-register">
+  <div class="card">
+    <div class="brand">
+      <span class="brand-name">RSS Reader</span>
+    </div>
+    <h1>Create account</h1>
+    <p class="subtitle">Sign up to start reading</p>
+
+    <div th:if="${globalError}" class="alert alert-error" th:text="${globalError}"></div>
+
+    <form th:action="@{/register}" th:object="${form}" method="post" novalidate>
+      <div class="field-wrap">
+        <label for="email">Email</label>
+        <input id="email" th:field="*{email}" type="email" class="field"
+               th:classappend="${#fields.hasErrors('email')} ? 'field-error'"
+               placeholder="you@example.com" autocomplete="email" autofocus>
+        <div th:if="${#fields.hasErrors('email')}" class="err-msg"
+             th:errors="*{email}"></div>
+      </div>
+
+      <div class="field-wrap">
+        <label for="password">Password</label>
+        <input id="password" th:field="*{password}" type="password" class="field"
+               th:classappend="${#fields.hasErrors('password')} ? 'field-error'"
+               placeholder="At least 6 characters" autocomplete="new-password">
+        <div th:if="${#fields.hasErrors('password')}" class="err-msg"
+             th:errors="*{password}"></div>
+      </div>
+
+      <div class="field-wrap">
+        <label for="confirmPassword">Confirm password</label>
+        <input id="confirmPassword" th:field="*{confirmPassword}" type="password" class="field"
+               th:classappend="${#fields.hasErrors('confirmPassword')} ? 'field-error'"
+               placeholder="Repeat your password" autocomplete="new-password">
+        <div th:if="${#fields.hasErrors('confirmPassword')}" class="err-msg"
+             th:errors="*{confirmPassword}"></div>
+      </div>
+
+      <button type="submit" class="btn">Create account</button>
+    </form>
+
+    <p class="footer-link">
+      Already have an account? <a th:href="@{/login}">Sign in</a>
+    </p>
+  </div>
+</body>
+</html>
