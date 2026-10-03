@@ -38,6 +38,11 @@ public class RssAtomParser {
      * A future HTTP fetcher must also enforce its size limit while downloading.
      */
     public ParsedFeed parse(byte[] xml, URI sourceUri) {
+        return parse(xml, sourceUri, null);
+    }
+
+    /** HTTP Content-Type may contain a charset that is absent from the XML declaration. */
+    public ParsedFeed parse(byte[] xml, URI sourceUri, String contentType) {
         if (xml == null || xml.length == 0) {
             throw new FeedParsingException("Стрічка порожня");
         }
@@ -49,7 +54,9 @@ public class RssAtomParser {
         }
 
         SyndFeed feed;
-        try (XmlReader reader = new XmlReader(new ByteArrayInputStream(xml))) {
+        try (XmlReader reader = contentType == null || contentType.isBlank()
+                ? new XmlReader(new ByteArrayInputStream(xml))
+                : new XmlReader(new ByteArrayInputStream(xml), contentType, true)) {
             // A new instance for each invocation avoids sharing mutable parser state.
             SyndFeedInput input = new SyndFeedInput();
             input.setAllowDoctypes(false);
