@@ -54,9 +54,9 @@
         <h2>Додати джерело</h2>
         <form th:action="@{/feeds}" th:object="${form}" method="post" novalidate>
           <div class="field-wrap">
-            <label for="name">Назва (можна залишити порожньою)</label>
+            <label for="name">Назва</label>
             <input id="name" class="field" th:field="*{name}" maxlength="255"
-                   placeholder="Визначимо зі стрічки автоматично"
+                   placeholder="Вкажіть назву джерела"
                    th:classappend="${#fields.hasErrors('name')} ? 'field-error'">
             <div class="err-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
           </div>
