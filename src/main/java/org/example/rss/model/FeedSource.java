@@ -1,11 +1,13 @@
 package org.example.rss.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.Instant;
 
 @Entity
 @Table(name = "feed_sources")
+@Data
 public class FeedSource {
 
     @Id
