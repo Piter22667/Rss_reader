@@ -31,7 +31,15 @@
             th:classappend="${selectedSource != null and selectedSource.id == source.id} ? 'selected'">
           <a class="source-link" th:href="@{/(feedId=${source.id})}"
              th:attr="aria-current=${selectedSource != null and selectedSource.id == source.id ? 'page' : null}">
-            <strong th:text="${source.name}"></strong>
+            <div class="source-heading">
+              <span class="source-icon" aria-hidden="true">
+                <span class="source-icon-fallback">◉</span>
+                <img th:if="${source.faviconUrl != null}" th:src="${source.faviconUrl}"
+                     alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"
+                     onerror="this.remove()">
+              </span>
+              <strong th:text="${source.name}"></strong>
+            </div>
             <span th:text="${source.url}"></span>
           </a>
           <form th:action="@{/feeds/{id}/delete(id=${source.id})}" method="post"
@@ -46,9 +54,9 @@
         <h2>Додати джерело</h2>
         <form th:action="@{/feeds}" th:object="${form}" method="post" novalidate>
           <div class="field-wrap">
-            <label for="name">Назва</label>
+            <label for="name">Назва (можна залишити порожньою)</label>
             <input id="name" class="field" th:field="*{name}" maxlength="255"
-                   placeholder="Наприклад, Новини технологій"
+                   placeholder="Визначимо зі стрічки автоматично"
                    th:classappend="${#fields.hasErrors('name')} ? 'field-error'">
             <div class="err-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
           </div>
@@ -61,7 +69,7 @@
             <div class="err-msg" th:if="${#fields.hasErrors('validUrl')}" th:errors="*{validUrl}"></div>
           </div>
           <button class="btn" type="submit">Додати джерело</button>
-          <p class="form-note">URL зберігається без завантаження статей.</p>
+          <p class="form-note">Без назви використаємо title стрічки, а якщо він недоступний — домен сайту.</p>
         </form>
       </section>
     </aside>

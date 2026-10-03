@@ -15,11 +15,13 @@ import static org.mockito.Mockito.*;
 class FeedSourceServiceTests {
     private final FeedSourceRepository feeds = mock(FeedSourceRepository.class);
     private final UserRepository users = mock(UserRepository.class);
-    private final FeedSourceService service = new FeedSourceService(feeds, users);
+    private final FeedMetadataService metadata = mock(FeedMetadataService.class);
+    private final FeedSourceService service = new FeedSourceService(feeds, users, metadata);
     private final User owner = mock(User.class);
 
     @BeforeEach
     void setUp() {
+        when(metadata.resolveTitle(anyString())).thenReturn("Feed title");
         when(owner.getId()).thenReturn(7L);
         when(users.findByEmail("owner@example.com")).thenReturn(Optional.of(owner));
     }

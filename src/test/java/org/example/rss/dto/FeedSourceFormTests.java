@@ -29,7 +29,7 @@ class FeedSourceFormTests {
             FeedSourceForm form = new FeedSourceForm();
             form.setName("   ");
             form.setUrl("   ");
-            assertEquals(2, validator.validate(form).size());
+            assertEquals(1, validator.validate(form).size());
             form.setName("a".repeat(256));
             form.setUrl("https://example.com/" + "a".repeat(2048));
             assertEquals(2, validator.validate(form).size());

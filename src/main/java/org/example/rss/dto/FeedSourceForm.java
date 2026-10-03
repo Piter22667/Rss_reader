@@ -7,7 +7,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class FeedSourceForm {
-    @NotBlank(message = "Вкажіть назву джерела")
     @Size(max = 255, message = "Назва має містити не більше 255 символів")
     private String name;
 

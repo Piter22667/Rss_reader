@@ -17,10 +17,12 @@ import java.util.List;
 public class FeedSourceService {
     private final FeedSourceRepository feedSourceRepository;
     private final UserRepository userRepository;
+    private final FeedMetadataService feedMetadataService;
 
-    public FeedSourceService(FeedSourceRepository feedSourceRepository, UserRepository userRepository) {
+    public FeedSourceService(FeedSourceRepository feedSourceRepository, UserRepository userRepository, FeedMetadataService feedMetadataService) {
         this.feedSourceRepository = feedSourceRepository;
         this.userRepository = userRepository;
+        this.feedMetadataService = feedMetadataService;
     }
 
     public List<FeedSource> list(String email) {
@@ -40,7 +42,9 @@ public class FeedSourceService {
         }
         FeedSource source = new FeedSource();
         source.setUser(user);
-        source.setName(form.getName());
+        String name = form.getName();
+        if (name == null || name.isBlank()) name = feedMetadataService.resolveTitle(form.getUrl());
+        source.setName(name);
         source.setUrl(form.getUrl());
         source.setCreatedAt(Instant.now());
         return feedSourceRepository.saveAndFlush(source);
