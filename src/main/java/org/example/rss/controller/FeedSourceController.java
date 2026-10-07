@@ -4,6 +4,11 @@ import jakarta.validation.Valid;
 import org.example.rss.dto.FeedSourceForm;
 import org.example.rss.model.FeedSource;
 import org.example.rss.service.FeedSourceService;
+import org.example.rss.service.ArticleImportService;
+import org.example.rss.service.ArticleQueryService;
+import org.example.rss.service.FeedDownloadException;
+import org.example.rss.service.FeedParsingException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,15 +21,21 @@ import java.util.List;
 @Controller
 public class FeedSourceController {
     private final FeedSourceService feedSourceService;
+    private final ArticleImportService articleImportService;
+    private final ArticleQueryService articleQueryService;
 
-    public FeedSourceController(FeedSourceService feedSourceService) {
+    public FeedSourceController(FeedSourceService feedSourceService, ArticleImportService articleImportService,
+                                ArticleQueryService articleQueryService) {
         this.feedSourceService = feedSourceService;
+        this.articleImportService = articleImportService;
+        this.articleQueryService = articleQueryService;
     }
 
     @GetMapping("/")
-    public String home(@RequestParam(required = false) Long feedId, Principal principal, Model model) {
+    public String home(@RequestParam(required = false) Long feedId,
+                       @RequestParam(defaultValue = "0") int page, Principal principal, Model model) {
         model.addAttribute("form", new FeedSourceForm());
-        populatePage(model, principal.getName(), feedId);
+        populatePage(model, principal.getName(), feedId, page);
         return "home";
     }
 
@@ -45,7 +56,7 @@ public class FeedSourceController {
                 bindingResult.rejectValue("url", "feed.duplicate", "Це RSS-джерело вже є у вашому списку");
             }
         }
-        populatePage(model, principal.getName(), null);
+        populatePage(model, principal.getName(), null, 0);
         return "home";
     }
 
@@ -56,7 +67,22 @@ public class FeedSourceController {
         return "redirect:/";
     }
 
-    private void populatePage(Model model, String email, Long feedId) {
+    @PostMapping("/feeds/{id}/import")
+    public String importArticles(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes) {
+        try {
+            var result = articleImportService.importArticles(id, principal.getName());
+            redirectAttributes.addFlashAttribute("success", "Оновлено. Додано: " + result.imported()
+                    + ". Уже збережено: " + result.alreadyExists() + ". Пропущено: " + result.skipped() + ".");
+        } catch (FeedDownloadException | FeedParsingException ex) {
+            redirectAttributes.addFlashAttribute("importError", ex.getMessage());
+        } catch (DataAccessException ex) {
+            redirectAttributes.addFlashAttribute("importError", "Не вдалося зберегти статті. Спробуйте оновити джерело пізніше.");
+        }
+        redirectAttributes.addAttribute("feedId", id);
+        return "redirect:/";
+    }
+
+    private void populatePage(Model model, String email, Long feedId, int page) {
         List<FeedSource> sources = feedSourceService.list(email);
         FeedSource selected = feedId == null
                 ? (sources.isEmpty() ? null : sources.get(0))
@@ -64,6 +90,12 @@ public class FeedSourceController {
         model.addAttribute("sources", sources);
         model.addAttribute("selectedSource", selected);
         model.addAttribute("email", email);
+        if (selected != null) {
+            var articlePage = articleQueryService.listOwned(selected.getId(), email, page);
+            model.addAttribute("articlePage", articlePage);
+            model.addAttribute("articles", articlePage.getContent());
+            model.addAttribute("lastFetchedAtLabel", articleQueryService.formatDate(selected.getLastFetchedAt()));
+        }
     }
 
     private boolean isDuplicateUrl(Throwable exception) {

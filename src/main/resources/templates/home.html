@@ -19,6 +19,7 @@
     </div>
   </header>
   <div th:if="${success}" class="alert alert-success" role="status" th:text="${success}"></div>
+  <div th:if="${importError}" class="alert" role="alert" th:text="${importError}"></div>
   <div class="layout">
     <aside class="panel sources-panel" aria-label="Керування RSS-джерелами">
       <div class="section-heading">
@@ -69,20 +70,43 @@
             <div class="err-msg" th:if="${#fields.hasErrors('validUrl')}" th:errors="*{validUrl}"></div>
           </div>
           <button class="btn" type="submit">Додати джерело</button>
-          <p class="form-note">Без назви використаємо title стрічки, а якщо він недоступний — домен сайту.</p>
         </form>
       </section>
     </aside>
     <main class="panel content-panel">
       <th:block th:if="${selectedSource != null}">
-        <p class="eyebrow">Вибране джерело</p>
-        <h2 class="feed-title" th:text="${selectedSource.name}"></h2>
-        <p class="feed-url" th:text="${selectedSource.url}"></p>
-        <div class="empty-content">
-          <span class="empty-icon" aria-hidden="true">☰</span>
-          <h3>Статті ще не завантажено</h3>
-          <p>Джерело збережено. Статті з’являться після підключення імпорту RSS та Atom.</p>
+        <div class="feed-toolbar">
+          <div>
+            <p class="eyebrow">Вибране джерело</p>
+            <h2 class="feed-title" th:text="${selectedSource.name}"></h2>
+          </div>
+          <form th:action="@{/feeds/{id}/import(id=${selectedSource.id})}" method="post" data-import-form>
+            <button class="btn import-button" type="submit">⟳ Оновити</button>
+          </form>
         </div>
+        <p class="feed-url" th:text="${selectedSource.url}"></p>
+        <div class="feed-meta">
+          <span th:text="${'Статей: ' + articlePage.totalElements}"></span>
+          <span th:if="${lastFetchedAtLabel != null}" th:text="${'Оновлено: ' + lastFetchedAtLabel}"></span>
+        </div>
+        <div class="empty-content" th:if="${articlePage.totalElements == 0}">
+          <span class="empty-icon" aria-hidden="true">☰</span>
+          <h3 th:text="${selectedSource.lastFetchedAt == null ? 'Статті ще не завантажено' : 'Поки немає статей'}"></h3>
+          <p th:text="${selectedSource.lastFetchedAt == null ? 'Натисніть «Оновити», щоб завантажити статті джерела.' : 'Стрічку перевірено, але придатних для збереження статей у ній немає.'}"></p>
+        </div>
+        <section class="article-list" th:if="${!#lists.isEmpty(articles)}" aria-label="Статті джерела" tabindex="0">
+          <article class="article-card" th:each="article : ${articles}">
+            <p class="article-date" th:if="${article.publishedAtLabel != null}" th:text="${article.publishedAtLabel}"></p>
+            <h3 class="article-title" th:text="${article.title}"></h3>
+            <p class="article-description" th:if="${article.description != null and !#strings.isEmpty(article.description)}" th:text="${article.description}"></p>
+            <a class="article-original" th:if="${article.link != null}" th:href="${article.link}" target="_blank" rel="noopener noreferrer">Читати оригінал ↗</a>
+          </article>
+        </section>
+        <nav class="pagination" th:if="${articlePage.totalPages > 1}" aria-label="Сторінки статей">
+          <a class="page-link" th:if="${articlePage.hasPrevious()}" th:href="@{/(feedId=${selectedSource.id},page=${articlePage.number - 1})}">← Попередня</a>
+          <span th:text="${'Сторінка ' + (articlePage.number + 1) + ' з ' + articlePage.totalPages}"></span>
+          <a class="page-link" th:if="${articlePage.hasNext()}" th:href="@{/(feedId=${selectedSource.id},page=${articlePage.number + 1})}">Наступна →</a>
+        </nav>
       </th:block>
       <div class="empty-content welcome" th:if="${selectedSource == null}">
         <span class="empty-icon" aria-hidden="true">＋</span>
@@ -92,5 +116,6 @@
     </main>
   </div>
 </div>
+<script th:src="@{/js/home.js}" defer></script>
 </body>
 </html>
