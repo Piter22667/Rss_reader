@@ -3,6 +3,9 @@ package org.example.rss.controller;
 import org.example.rss.dto.FeedSourceForm;
 import org.example.rss.model.FeedSource;
 import org.example.rss.service.FeedSourceService;
+import org.example.rss.service.ArticleImportService;
+import org.example.rss.service.ArticleQueryService;
+import org.springframework.data.domain.Page;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class FeedSourceControllerTests {
     private final FeedSourceService service = mock(FeedSourceService.class);
+    private final ArticleQueryService articleQuery = mock(ArticleQueryService.class);
     private MockMvc mvc;
 
     @BeforeEach
@@ -33,7 +37,9 @@ class FeedSourceControllerTests {
         ThymeleafViewResolver views = new ThymeleafViewResolver();
         views.setTemplateEngine(engine);
         views.setCharacterEncoding("UTF-8");
-        mvc = MockMvcBuilders.standaloneSetup(new FeedSourceController(service))
+        when(articleQuery.listOwned(anyLong(), anyString(), anyInt())).thenReturn(Page.empty());
+        mvc = MockMvcBuilders.standaloneSetup(new FeedSourceController(service,
+                mock(ArticleImportService.class), articleQuery))
                 .setViewResolvers(views).build();
         views.setApplicationContext(mvc.getDispatcherServlet().getWebApplicationContext());
         when(service.list("owner@example.com")).thenReturn(List.of());
