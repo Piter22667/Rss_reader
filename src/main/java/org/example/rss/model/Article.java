@@ -1,6 +1,7 @@
 package org.example.rss.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +9,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "articles")
-@Getter
-@Setter
+@Data
 public class Article {
 
     @Id
