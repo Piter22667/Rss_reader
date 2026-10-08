@@ -15,6 +15,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -23,19 +24,22 @@ public class ArticleImportService {
     private final FeedReadingService feedReadingService;
     private final FeedSourceRepository sourceRepository;
     private final ArticleRepository articleRepository;
+    private final BrightDataWebUnlockerService brightDataWebUnlockerService;
     private final TransactionTemplate transaction;
 
     public ArticleImportService(FeedSourceService sources, FeedReadingService reader,
-                               FeedSourceRepository sourceRepository, ArticleRepository articles,
-                               PlatformTransactionManager transactionManager) {
+                                FeedSourceRepository sourceRepository, ArticleRepository articles,
+                                BrightDataWebUnlockerService brightDataWebUnlockerService,
+                                PlatformTransactionManager transactionManager) {
         this.feedSourceService = sources;
         this.feedReadingService = reader;
         this.sourceRepository = sourceRepository;
         this.articleRepository = articles;
+        this.brightDataWebUnlockerService = brightDataWebUnlockerService;
         this.transaction = new TransactionTemplate(transactionManager);
         transaction.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
         transaction.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
-        transaction.setTimeout(30);
+        transaction.setTimeout(60);
     }
 
     // Network operations run before the database transaction and its row lock.
@@ -45,10 +49,23 @@ public class ArticleImportService {
 
         ParsedFeed feed = feedReadingService.read(url);
 
-        return Objects.requireNonNull(transaction.execute(status -> save(sourceId, email, url, feed)));
+        List<String> linksToFetch = feed.articles().stream()
+                .filter(entry -> entry.link() != null && !entry.link().isBlank() && entry.link().length() <= 2048)
+                .filter(entry -> {
+                    var existing = articleRepository.findInSource(sourceId, entry.externalId(), entry.link());
+                    return existing.isEmpty() || existing.get().getFullText() == null;
+                })
+                .map(org.example.rss.dto.ParsedArticle::link)
+                .distinct()
+                .toList();
+
+        java.util.Map<String, String> markdownMap = brightDataWebUnlockerService.fetchMarkdownBatch(linksToFetch);
+
+        return Objects.requireNonNull(transaction.execute(status -> save(sourceId, email, url, feed, markdownMap)));
     }
 
-    private ArticleImportResult save(Long sourceId, String email, String url, ParsedFeed feed) {
+    private ArticleImportResult save(Long sourceId, String email, String url, ParsedFeed feed,
+                                     java.util.Map<String, String> markdownMap) {
         var source = sourceRepository.findOwnedForImport(sourceId, email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Джерело не знайдено"));
         if (!Objects.equals(source.getUrl(), url)) {
@@ -65,7 +82,15 @@ public class ArticleImportService {
                 skipped++;
                 continue;
             }
-            if (articleRepository.existsInSource(sourceId, guid, entry.link())) {
+            String md = markdownMap.get(entry.link());
+            var existingOpt = articleRepository.findInSource(sourceId, guid, entry.link());
+            if (existingOpt.isPresent()) {
+                Article existing = existingOpt.get();
+                if (existing.getFullText() == null && md != null && !md.isBlank()) {
+                    existing.setFullText(md);
+                    existing.setFullTextFetchedAt(fetchedAt);
+                    articleRepository.save(existing);
+                }
                 duplicates++;
                 continue;
             }
@@ -78,6 +103,11 @@ public class ArticleImportService {
             article.setDescription(entry.description());
             article.setPublishedAt(entry.publishedAt());
             article.setCreatedAt(fetchedAt);
+
+            if (md != null && !md.isBlank()) {
+                article.setFullText(md);
+                article.setFullTextFetchedAt(fetchedAt);
+            }
 
             articleRepository.save(article);
             imported++;

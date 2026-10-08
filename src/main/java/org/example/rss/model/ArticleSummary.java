@@ -1,12 +1,14 @@
 package org.example.rss.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.example.rss.model.enums.SummaryStatus;
 
 import java.time.Instant;
 
 @Entity
 @Table(name = "article_summaries")
+@Data
 public class ArticleSummary {
 
     @Id

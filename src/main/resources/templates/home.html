@@ -96,7 +96,10 @@
         </div>
         <section class="article-list" th:if="${!#lists.isEmpty(articles)}" aria-label="Статті джерела" tabindex="0">
           <article class="article-card" th:each="article : ${articles}">
-            <p class="article-date" th:if="${article.publishedAtLabel != null}" th:text="${article.publishedAtLabel}"></p>
+            <div class="article-card-header">
+              <p class="article-date" th:if="${article.publishedAtLabel != null}" th:text="${article.publishedAtLabel}"></p>
+              <span class="badge-markdown" th:if="${article.fullText != null}">MD збережено</span>
+            </div>
             <h3 class="article-title" th:text="${article.title}"></h3>
             <p class="article-description" th:if="${article.description != null and !#strings.isEmpty(article.description)}" th:text="${article.description}"></p>
             <a class="article-original" th:if="${article.link != null}" th:href="${article.link}" target="_blank" rel="noopener noreferrer">Читати оригінал ↗</a>
@@ -114,8 +117,47 @@
         <p>Додайте RSS-джерело у формі поруч, щоб почати.</p>
       </div>
     </main>
+    <aside class="panel prefs-panel" aria-label="Вподобання" th:if="${selectedSource != null}">
+      <div class="prefs-head">
+        <div class="history">
+          <button type="button" id="prefOlder" class="icon-btn small" title="Старіша версія" aria-label="Старіша версія">←</button>
+          <button type="button" id="prefNewer" class="icon-btn small" title="Новіша версія" aria-label="Новіша версія">→</button>
+        </div>
+        <h2 class="prefs-title">Вподобання</h2>
+        <button type="button" id="prefImprove" class="icon-btn small pref-sparkle" title="Покращити вподобання" aria-label="Покращити вподобання">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="prefs-body">
+        <form id="prefsForm" th:action="@{/feeds/{id}/preferences(id=${selectedSource.id})}" method="post">
+          <textarea id="prefTextarea" name="content" class="prefs-textarea"
+                    placeholder="Опишіть, що ви хотіли б читати, якою мовою, у якому стилі, що не цікавить…"
+                    th:text="${latestPreference != null ? latestPreference.content : ''}"></textarea>
+          <button id="prefSaveBtn" class="btn btn-save-prefs" type="submit">Зберегти</button>
+        </form>
+        <p id="prefHint" class="pref-hint"
+           th:text="${preferences == null or #lists.isEmpty(preferences) ? 'Додайте вподобання і натисніть «Зберегти».' : 'Версія ' + #lists.size(preferences) + ' з ' + #lists.size(preferences) + '. ← старіша, → новіша.'}">
+          Кожне збереження створює нову версію.
+        </p>
+      </div>
+    </aside>
+    <aside class="panel prefs-panel empty-prefs-panel" aria-label="Вподобання" th:if="${selectedSource == null}">
+      <div class="empty-content">
+        <span class="empty-icon" aria-hidden="true">✎</span>
+        <h3>Вподобання</h3>
+        <p>Оберіть стрічку ліворуч, щоб налаштувати вподобання.</p>
+      </div>
+    </aside>
   </div>
 </div>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  window.currentFeedId = /*[[${selectedSource != null ? selectedSource.id : null}]]*/ null;
+  window.initialPreferences = /*[[${preferences}]]*/ [];
+  /*]]>*/
+</script>
 <script th:src="@{/js/home.js}" defer></script>
 </body>
 </html>

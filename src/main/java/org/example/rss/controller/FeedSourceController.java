@@ -18,17 +18,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.List;
 
+import org.example.rss.dto.PreferenceVersionDto;
+import org.example.rss.service.PreferenceService;
+import org.springframework.http.MediaType;
+
 @Controller
 public class FeedSourceController {
     private final FeedSourceService feedSourceService;
     private final ArticleImportService articleImportService;
     private final ArticleQueryService articleQueryService;
+    private final PreferenceService preferenceService;
 
     public FeedSourceController(FeedSourceService feedSourceService, ArticleImportService articleImportService,
-                                ArticleQueryService articleQueryService) {
+                                ArticleQueryService articleQueryService, PreferenceService preferenceService) {
         this.feedSourceService = feedSourceService;
         this.articleImportService = articleImportService;
         this.articleQueryService = articleQueryService;
+        this.preferenceService = preferenceService;
     }
 
     @GetMapping("/")
@@ -82,6 +88,29 @@ public class FeedSourceController {
         return "redirect:/";
     }
 
+    @PostMapping("/feeds/{id}/preferences")
+    public String savePreferences(@PathVariable Long id, @RequestParam("content") String content,
+                                  Principal principal, RedirectAttributes redirectAttributes) {
+        preferenceService.savePreference(id, content, principal.getName());
+        redirectAttributes.addFlashAttribute("success", "Вподобання збережено як нову версію");
+        redirectAttributes.addAttribute("feedId", id);
+        return "redirect:/";
+    }
+
+    @PostMapping(value = "/api/feeds/{id}/preferences", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public PreferenceVersionDto savePreferenceAjax(@PathVariable Long id, @RequestBody java.util.Map<String, String> payload,
+                                                   Principal principal) {
+        String content = payload.get("content");
+        return preferenceService.savePreference(id, content, principal.getName());
+    }
+
+    @GetMapping(value = "/api/feeds/{id}/preferences", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<PreferenceVersionDto> getPreferencesAjax(@PathVariable Long id, Principal principal) {
+        return preferenceService.getVersions(id, principal.getName());
+    }
+
     private void populatePage(Model model, String email, Long feedId, int page) {
         List<FeedSource> sources = feedSourceService.list(email);
         FeedSource selected = feedId == null
@@ -95,6 +124,10 @@ public class FeedSourceController {
             model.addAttribute("articlePage", articlePage);
             model.addAttribute("articles", articlePage.getContent());
             model.addAttribute("lastFetchedAtLabel", articleQueryService.formatDate(selected.getLastFetchedAt()));
+
+            List<PreferenceVersionDto> preferences = preferenceService.getVersions(selected.getId(), email);
+            model.addAttribute("preferences", preferences);
+            model.addAttribute("latestPreference", preferences.isEmpty() ? null : preferences.get(preferences.size() - 1));
         }
     }
 

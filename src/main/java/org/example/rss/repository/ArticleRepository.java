@@ -13,6 +13,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     boolean existsInSource(@Param("sourceId") Long sourceId, @Param("guid") String guid,
                            @Param("link") String link);
 
+    @Query("select a from Article a where a.feedSource.id = :sourceId "
+            + "and (a.link = :link or (:guid is not null and a.guid = :guid))")
+    java.util.Optional<Article> findInSource(@Param("sourceId") Long sourceId, @Param("guid") String guid,
+                                            @Param("link") String link);
+
     @Query(value = "select a from Article a where a.feedSource.id = :sourceId "
             + "and a.feedSource.user.email = :email order by coalesce(a.publishedAt, a.createdAt) desc, a.id desc",
             countQuery = "select count(a) from Article a where a.feedSource.id = :sourceId "
