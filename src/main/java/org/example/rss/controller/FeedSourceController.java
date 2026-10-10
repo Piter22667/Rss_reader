@@ -18,17 +18,40 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.List;
 
+import org.example.rss.dto.PreferenceForm;
+import org.example.rss.dto.PreferenceVersionDto;
+import org.example.rss.dto.ArticleImportResult;
+import org.example.rss.service.ArticleUpdateService;
+import org.example.rss.service.OpenRouterPreferenceService;
+import org.example.rss.service.PreferenceService;
+import org.springframework.http.MediaType;
+
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+
 @Controller
 public class FeedSourceController {
+    private static final DateTimeFormatter MESSAGE_TIME = DateTimeFormatter
+            .ofPattern("dd.MM.yyyy HH:mm").withZone(ZoneId.of("Europe/Kyiv"));
+
     private final FeedSourceService feedSourceService;
     private final ArticleImportService articleImportService;
     private final ArticleQueryService articleQueryService;
+    private final PreferenceService preferenceService;
+    private final ArticleUpdateService articleUpdateService;
+    private final OpenRouterPreferenceService openRouterPreferenceService;
 
     public FeedSourceController(FeedSourceService feedSourceService, ArticleImportService articleImportService,
-                                ArticleQueryService articleQueryService) {
+                                ArticleQueryService articleQueryService, PreferenceService preferenceService,
+                                ArticleUpdateService articleUpdateService,
+                                OpenRouterPreferenceService openRouterPreferenceService) {
         this.feedSourceService = feedSourceService;
         this.articleImportService = articleImportService;
         this.articleQueryService = articleQueryService;
+        this.preferenceService = preferenceService;
+        this.articleUpdateService = articleUpdateService;
+        this.openRouterPreferenceService = openRouterPreferenceService;
     }
 
     @GetMapping("/")
@@ -45,8 +68,8 @@ public class FeedSourceController {
         if (!bindingResult.hasErrors()) {
             try {
                 FeedSource source = feedSourceService.add(form, principal.getName());
+                importInitialArticles(source.getId(), principal.getName(), redirectAttributes);
                 redirectAttributes.addAttribute("feedId", source.getId());
-                redirectAttributes.addFlashAttribute("success", "RSS-джерело додано");
                 return "redirect:/";
             } catch (FeedSourceService.DuplicateFeedSourceException ex) {
                 bindingResult.rejectValue("url", "feed.duplicate", ex.getMessage());
@@ -70,9 +93,9 @@ public class FeedSourceController {
     @PostMapping("/feeds/{id}/import")
     public String importArticles(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes) {
         try {
-            var result = articleImportService.importArticles(id, principal.getName());
-            redirectAttributes.addFlashAttribute("success", "Оновлено. Додано: " + result.imported()
-                    + ". Уже збережено: " + result.alreadyExists() + ". Пропущено: " + result.skipped() + ".");
+            var result = articleImportService.importMetadata(id, principal.getName());
+            redirectAttributes.addFlashAttribute("success", importMessage(result));
+            articleUpdateService.enqueueRefresh(id, false, ArticleUpdateService.PRIORITY_HIGH);
         } catch (FeedDownloadException | FeedParsingException ex) {
             redirectAttributes.addFlashAttribute("importError", ex.getMessage());
         } catch (DataAccessException ex) {
@@ -80,6 +103,60 @@ public class FeedSourceController {
         }
         redirectAttributes.addAttribute("feedId", id);
         return "redirect:/";
+    }
+
+    private void importInitialArticles(Long sourceId, String email, RedirectAttributes redirectAttributes) {
+        try {
+            var result = articleImportService.importMetadata(sourceId, email);
+            redirectAttributes.addFlashAttribute("success",
+                    result == null ? "RSS-джерело додано" : "RSS-джерело додано. " + importMessage(result));
+            articleUpdateService.enqueueRefresh(sourceId, false, ArticleUpdateService.PRIORITY_HIGH);
+        } catch (FeedDownloadException | FeedParsingException | DataAccessException ex) {
+            redirectAttributes.addFlashAttribute("success", "RSS-джерело додано");
+            redirectAttributes.addFlashAttribute("importError", ex.getMessage());
+        }
+    }
+
+    private String importMessage(ArticleImportResult result) {
+        return "Оновлено: " + MESSAGE_TIME.format(result.fetchedAt())
+                + ". Додано нових: " + result.imported()
+                + ". Уже були: " + result.alreadyExists()
+                + ". Пропущено: " + result.skipped()
+                + ". Усього статей: " + result.total() + ".";
+    }
+
+    @PostMapping("/feeds/{id}/preferences")
+    public String savePreferences(@PathVariable Long id, @RequestParam("content") String content,
+                                  @RequestParam(value = "language", required = false) String language,
+                                  @RequestParam(value = "summaryLength", required = false) String summaryLength,
+                                  @RequestParam(value = "style", required = false) String style,
+                                  Principal principal, RedirectAttributes redirectAttributes) {
+        preferenceService.savePreference(id, content, language, summaryLength, style, principal.getName());
+        redirectAttributes.addFlashAttribute("success", "Вподобання збережено як нову версію");
+        redirectAttributes.addAttribute("feedId", id);
+        return "redirect:/";
+    }
+
+    @PostMapping(value = "/api/feeds/{id}/preferences", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public PreferenceVersionDto savePreferenceAjax(@PathVariable Long id, @RequestBody PreferenceForm payload,
+                                                   Principal principal) {
+        return preferenceService.savePreference(id, payload.getContent(), payload.getLanguage(),
+                payload.getSummaryLength(), payload.getStyle(), principal.getName());
+    }
+
+    @GetMapping(value = "/api/feeds/{id}/preferences", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<PreferenceVersionDto> getPreferencesAjax(@PathVariable Long id, Principal principal) {
+        return preferenceService.getVersions(id, principal.getName());
+    }
+
+    @PostMapping(value = "/api/feeds/{id}/preferences/improve", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, String> improvePreferences(@PathVariable Long id, @RequestBody PreferenceForm payload,
+                                                  Principal principal) {
+        String improved = openRouterPreferenceService.improve(id, payload.getContent(), principal.getName());
+        return Map.of("content", improved);
     }
 
     private void populatePage(Model model, String email, Long feedId, int page) {
@@ -95,6 +172,10 @@ public class FeedSourceController {
             model.addAttribute("articlePage", articlePage);
             model.addAttribute("articles", articlePage.getContent());
             model.addAttribute("lastFetchedAtLabel", articleQueryService.formatDate(selected.getLastFetchedAt()));
+
+            List<PreferenceVersionDto> preferences = preferenceService.getVersions(selected.getId(), email);
+            model.addAttribute("preferences", preferences);
+            model.addAttribute("latestPreference", preferences.isEmpty() ? null : preferences.get(preferences.size() - 1));
         }
     }
 

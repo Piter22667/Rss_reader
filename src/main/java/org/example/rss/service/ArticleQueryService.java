@@ -33,7 +33,8 @@ public class ArticleQueryService {
             result = articles.findOwned(sourceId, email, PageRequest.of(result.getTotalPages() - 1, PAGE_SIZE));
         }
         return result.map(article -> new ArticleListItem(article.getId(), article.getTitle(),
-                safeLink(article.getLink()), article.getDescription(), formatDate(article.getPublishedAt())));
+                safeLink(article.getLink()), article.getDescription(), formatDate(article.getPublishedAt()),
+                article.getFullText()));
     }
 
     public String formatDate(Instant value) {

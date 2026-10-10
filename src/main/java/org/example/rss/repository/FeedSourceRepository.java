@@ -15,6 +15,12 @@ public interface FeedSourceRepository extends JpaRepository<FeedSource, Long> {
     @Query("select s from FeedSource s where s.id = :id and s.user.email = :email")
     Optional<FeedSource> findOwnedForImport(@Param("id") Long id, @Param("email") String email);
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select s from FeedSource s where s.id = :id")
+    Optional<FeedSource> findByIdForImport(@Param("id") Long id);
+
+    List<FeedSource> findAllByActiveForSchedulerTrue();
+
     List<FeedSource> findAllByUser_IdOrderByCreatedAtDesc(Long userId);
 
     Optional<FeedSource> findByIdAndUser_Id(Long id, Long userId);
