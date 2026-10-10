@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}">
+  <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}">
   <title>Мої джерела — RSS Reader</title>
   <link rel="stylesheet" th:href="@{/css/auth.css}">
   <link rel="stylesheet" th:href="@{/css/home.css}">
@@ -98,7 +100,6 @@
           <article class="article-card" th:each="article : ${articles}">
             <div class="article-card-header">
               <p class="article-date" th:if="${article.publishedAtLabel != null}" th:text="${article.publishedAtLabel}"></p>
-              <span class="badge-markdown" th:if="${article.fullText != null}">MD збережено</span>
             </div>
             <h3 class="article-title" th:text="${article.title}"></h3>
             <p class="article-description" th:if="${article.description != null and !#strings.isEmpty(article.description)}" th:text="${article.description}"></p>
@@ -132,11 +133,37 @@
       </div>
       <div class="prefs-body">
         <form id="prefsForm" th:action="@{/feeds/{id}/preferences(id=${selectedSource.id})}" method="post">
+          <div class="pref-options">
+            <label class="pref-option">
+              <span>Мова</span>
+              <select id="prefLanguage" name="language">
+                <option value="UK">Українська</option>
+                <option value="EN">Англійська</option>
+              </select>
+            </label>
+            <label class="pref-option">
+              <span>Детальність</span>
+              <select id="prefSummaryLength" name="summaryLength">
+                <option value="SHORT">Короткий</option>
+                <option value="MEDIUM">Середній</option>
+                <option value="DETAILED">Детальний</option>
+              </select>
+            </label>
+            <label class="pref-option">
+              <span>Стиль</span>
+              <select id="prefStyle" name="style">
+                <option value="SIMPLE">Простий</option>
+                <option value="NEUTRAL">Нейтральний</option>
+                <option value="PROFESSIONAL">Професійний</option>
+              </select>
+            </label>
+          </div>
           <textarea id="prefTextarea" name="content" class="prefs-textarea"
                     placeholder="Опишіть, що ви хотіли б читати, якою мовою, у якому стилі, що не цікавить…"
                     th:text="${latestPreference != null ? latestPreference.content : ''}"></textarea>
           <button id="prefSaveBtn" class="btn btn-save-prefs" type="submit">Зберегти</button>
         </form>
+        <div id="prefToast" class="pref-toast" role="status" aria-live="polite"></div>
         <p id="prefHint" class="pref-hint"
            th:text="${preferences == null or #lists.isEmpty(preferences) ? 'Додайте вподобання і натисніть «Зберегти».' : 'Версія ' + #lists.size(preferences) + ' з ' + #lists.size(preferences) + '. ← старіша, → новіша.'}">
           Кожне збереження створює нову версію.

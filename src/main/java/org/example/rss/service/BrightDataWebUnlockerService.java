@@ -53,7 +53,7 @@ public class BrightDataWebUnlockerService {
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(apiUrl))
-                    .timeout(Duration.ofSeconds(300))
+                    .timeout(Duration.ofSeconds(1000))
                     .header("Authorization", "Bearer " + apiToken)
                     .header("Content-Type", "application/json")
                     .header("x-unblock-data-format", "markdown")

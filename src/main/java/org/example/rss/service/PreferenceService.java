@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @Transactional(readOnly = true)
@@ -30,12 +31,13 @@ public class PreferenceService {
     public List<PreferenceVersionDto> getVersions(Long feedSourceId, String email) {
         feedSourceService.findOwned(feedSourceId, email);
         return preferenceVersionRepository.findByFeedSourceIdOrderByVersionNumberAsc(feedSourceId).stream()
-                .map(v -> new PreferenceVersionDto(v.getId(), v.getVersionNumber(), v.getOriginalContent(), v.getCreatedAt()))
+                .map(this::toDto)
                 .toList();
     }
 
     @Transactional
-    public PreferenceVersionDto savePreference(Long feedSourceId, String content, String email) {
+    public PreferenceVersionDto savePreference(Long feedSourceId, String content, String language,
+                                               String summaryLength, String style, String email) {
         FeedSource source = feedSourceService.findOwned(feedSourceId, email);
         if (content == null || content.isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Вподобання не можуть бути порожніми");
@@ -46,13 +48,30 @@ public class PreferenceService {
         PreferenceVersion version = new PreferenceVersion();
         version.setFeedSource(source);
         version.setVersionNumber(nextVersion);
-        version.setLanguage(Language.UK);
-        version.setSummaryLength(SummaryLength.MEDIUM);
-        version.setStyle(SummaryStyle.NEUTRAL);
+        // The historical defaults are kept as a fallback when the form does not send a value.
+        version.setLanguage(parseEnum(Language.class, language, Language.UK));
+        version.setSummaryLength(parseEnum(SummaryLength.class, summaryLength, SummaryLength.MEDIUM));
+        version.setStyle(parseEnum(SummaryStyle.class, style, SummaryStyle.NEUTRAL));
         version.setOriginalContent(content.trim());
         version.setCreatedAt(Instant.now());
 
         PreferenceVersion saved = preferenceVersionRepository.saveAndFlush(version);
-        return new PreferenceVersionDto(saved.getId(), saved.getVersionNumber(), saved.getOriginalContent(), saved.getCreatedAt());
+        return toDto(saved);
+    }
+
+    private PreferenceVersionDto toDto(PreferenceVersion version) {
+        return new PreferenceVersionDto(version.getId(), version.getVersionNumber(), version.getOriginalContent(),
+                version.getLanguage(), version.getSummaryLength(), version.getStyle(), version.getCreatedAt());
+    }
+
+    private <E extends Enum<E>> E parseEnum(Class<E> type, String value, E fallback) {
+        if (value == null || value.isBlank()) {
+            return fallback;
+        }
+        try {
+            return Enum.valueOf(type, value.trim().toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException ex) {
+            return fallback;
+        }
     }
 }

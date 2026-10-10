@@ -21,15 +21,56 @@ document.querySelectorAll('[data-import-form]').forEach(form => {
   const saveBtn = document.getElementById('prefSaveBtn');
   const hint = document.getElementById('prefHint');
   const form = document.getElementById('prefsForm');
+  const toast = document.getElementById('prefToast');
+  const languageSelect = document.getElementById('prefLanguage');
+  const summaryLengthSelect = document.getElementById('prefSummaryLength');
+  const styleSelect = document.getElementById('prefStyle');
 
   if (!textarea || !olderBtn || !newerBtn) return;
+
+  const csrfToken = document.querySelector('meta[name="_csrf"]');
+  const csrfHeader = document.querySelector('meta[name="_csrf_header"]');
+
+  function requestHeaders(json) {
+    const headers = {};
+    if (json) headers['Content-Type'] = 'application/json';
+    if (csrfToken && csrfHeader) headers[csrfHeader.content] = csrfToken.content;
+    return headers;
+  }
+
+  let toastTimer = null;
+  function showToast(message) {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('visible');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('visible'), 1000);
+  }
 
   let versions = Array.isArray(window.initialPreferences) ? [...window.initialPreferences] : [];
   let cursor = versions.length > 0 ? versions.length - 1 : -1;
 
+  function applySelect(select, value, fallback) {
+    if (!select) return;
+    const target = value || fallback;
+    if (Array.from(select.options).some(option => option.value === target)) select.value = target;
+  }
+
+  function currentOptions() {
+    return {
+      language: languageSelect ? languageSelect.value : 'UK',
+      summaryLength: summaryLengthSelect ? summaryLengthSelect.value : 'MEDIUM',
+      style: styleSelect ? styleSelect.value : 'NEUTRAL'
+    };
+  }
+
   function updateUI() {
     if (cursor >= 0 && cursor < versions.length) {
-      textarea.value = versions[cursor].content || '';
+      const version = versions[cursor];
+      textarea.value = version.content || '';
+      applySelect(languageSelect, version.language, 'UK');
+      applySelect(summaryLengthSelect, version.summaryLength, 'MEDIUM');
+      applySelect(styleSelect, version.style, 'NEUTRAL');
       hint.textContent = `Версія ${cursor + 1} з ${versions.length}. ← старіша, → новіша. Нове збереження створює нову версію.`;
     } else {
       hint.textContent = 'Додайте вподобання і натисніть «Зберегти».';
@@ -54,13 +95,23 @@ document.querySelectorAll('[data-import-form]').forEach(form => {
     }
   });
 
+  async function persist(content) {
+    const response = await fetch(`/api/feeds/${window.currentFeedId}/preferences`, {
+      method: 'POST',
+      headers: requestHeaders(true),
+      body: JSON.stringify({ content, ...currentOptions() })
+    });
+    if (!response.ok) throw new Error('Помилка сервера');
+    return response.json();
+  }
+
   if (form && window.currentFeedId) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const content = textarea.value.trim();
       if (!content) {
-        alert('Введіть текст вподобань перед збереженням.');
         textarea.focus();
+        showToast('Введіть текст вподобань перед збереженням.');
         return;
       }
 
@@ -69,63 +120,58 @@ document.querySelectorAll('[data-import-form]').forEach(form => {
       saveBtn.textContent = 'Збереження…';
 
       try {
-        const response = await fetch(`/api/feeds/${window.currentFeedId}/preferences`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ content })
-        });
-
-        if (!response.ok) {
-          throw new Error('Помилка сервера');
-        }
-
-        const newVersion = await response.json();
+        const newVersion = await persist(content);
         versions.push(newVersion);
         cursor = versions.length - 1;
         updateUI();
-
-        saveBtn.textContent = 'Збережено ✓';
-        setTimeout(() => {
-          saveBtn.textContent = originalText;
-          saveBtn.disabled = false;
-        }, 1200);
+        showToast('Вподобання збережено ✓');
       } catch (err) {
-        // Fallback to standard form submission
+        // Fallback to a standard form submission when AJAX is unavailable.
         form.submit();
+        return;
+      } finally {
+        saveBtn.textContent = originalText;
+        saveBtn.disabled = false;
       }
     });
   }
 
   if (improveBtn) {
-    improveBtn.addEventListener('click', () => {
+    improveBtn.addEventListener('click', async () => {
       const text = textarea.value.trim();
       if (!text) {
-        alert('Спершу введіть ваші вподобання для структурування та покращення.');
         textarea.focus();
+        showToast('Спершу введіть ваші вподобання для покращення.');
         return;
       }
+      if (!window.currentFeedId) return;
 
       improveBtn.classList.add('spin');
       improveBtn.disabled = true;
 
-      setTimeout(() => {
-        // Structure the preferences neatly into clear bullet points
-        const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-        const structured = [
-          '1. Мова матеріалів: Українська (або якісний переклад).',
-          '2. Формат: Лаконічний зміст, ключові тези та висновки статті.',
-          '3. Пріоритетні теми: ' + (lines.length > 0 ? lines[0] : 'технології, аналітика, важливі новини.'),
-          '4. Стиль: Інформативний, нейтральний, без клікбейту.',
-          '5. Що ігнорувати: Рекламу, повторювані новини, плітки.'
-        ].join('\n');
+      try {
+        const response = await fetch(`/api/feeds/${window.currentFeedId}/preferences/improve`, {
+          method: 'POST',
+          headers: requestHeaders(true),
+          body: JSON.stringify({ content: text, ...currentOptions() })
+        });
+        if (!response.ok) throw new Error('Не вдалося покращити вподобання');
+        const data = await response.json();
+        if (!data.content) throw new Error('Порожня відповідь');
 
-        textarea.value = structured;
+        textarea.value = data.content;
+        const newVersion = await persist(data.content.trim());
+        versions.push(newVersion);
+        cursor = versions.length - 1;
+        updateUI();
+        showToast('Вподобання покращено ✓');
+      } catch (err) {
+        showToast('Не вдалося покращити вподобання. Спробуйте пізніше.');
+      } finally {
         improveBtn.classList.remove('spin');
         improveBtn.disabled = false;
-        textarea.focus();
-      }, 350);
+      }
     });
   }
 })();
+
