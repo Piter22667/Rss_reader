@@ -34,7 +34,7 @@ public class ArticleSummaryBatchService {
     private final PreferenceVersionRepository preferences;
     private final ArticleRepository articles;
     private final ArticleSummaryRepository summaries;
-    private final ArticleSummaryPreviewService processor;
+    private final ArticleSummaryService processor;
     private final ExecutorService executor = Executors.newFixedThreadPool(2);
     private final ExecutorService articleExecutor;
     private final int parallelism;
@@ -44,7 +44,7 @@ public class ArticleSummaryBatchService {
     private volatile boolean stopping;
 
     public ArticleSummaryBatchService(FeedSourceService sources, PreferenceVersionRepository preferences,
-            ArticleRepository articles, ArticleSummaryRepository summaries, ArticleSummaryPreviewService processor,
+            ArticleRepository articles, ArticleSummaryRepository summaries, ArticleSummaryService processor,
             @Value("${rss.summary.parallelism:3}") int parallelism) {
         this.sources = sources;
         this.preferences = preferences;
@@ -191,7 +191,7 @@ public class ArticleSummaryBatchService {
         }
         SummaryStatus status = SummaryStatus.FAILED;
         try {
-            ArticleSummaryPreview result = processor.preview(sourceId, batch.preferenceId, email, false, articleId);
+            ArticleSummaryPreview result = processor.summarize(sourceId, batch.preferenceId, email, false, articleId);
             status = result.status();
         } catch (Exception ex) {
             log.warn("Summary failed for source {}, article {}: {}", sourceId, articleId, ex.getClass().getSimpleName());

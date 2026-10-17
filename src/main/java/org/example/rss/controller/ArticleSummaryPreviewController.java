@@ -1,7 +1,7 @@
 package org.example.rss.controller;
 
 import org.example.rss.dto.ArticleSummaryPreview;
-import org.example.rss.service.ArticleSummaryPreviewService;
+import org.example.rss.service.ArticleSummaryService;
 import org.example.rss.service.ArticleSummaryQueryService;
 import org.example.rss.dto.ArticleSummaryPage;
 import org.example.rss.dto.ArticleSummaryBatchProgress;
@@ -16,11 +16,11 @@ import java.util.List;
 
 @RestController
 public class ArticleSummaryPreviewController {
-    private final ArticleSummaryPreviewService service;
+    private final ArticleSummaryService service;
     private final ArticleSummaryQueryService queryService;
     private final ArticleSummaryBatchService batchService;
 
-    public ArticleSummaryPreviewController(ArticleSummaryPreviewService service, ArticleSummaryQueryService queryService,
+    public ArticleSummaryPreviewController(ArticleSummaryService service, ArticleSummaryQueryService queryService,
                                            ArticleSummaryBatchService batchService) {
         this.service = service;
         this.queryService = queryService;
@@ -56,7 +56,7 @@ public class ArticleSummaryPreviewController {
                                          @RequestParam(required = false) Long articleId, Principal principal) {
         batchService.beginManual(id, principal.getName());
         try {
-            return service.preview(id, preferenceId, principal.getName(), retry, articleId);
+            return service.summarize(id, preferenceId, principal.getName(), retry, articleId);
         } finally {
             batchService.endManual(id);
         }

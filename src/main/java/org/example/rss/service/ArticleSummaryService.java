@@ -31,8 +31,8 @@ import org.slf4j.LoggerFactory;
 
 /** Manual processing of one article, with a saved result per preference version. */
 @Service
-public class ArticleSummaryPreviewService {
-    private static final Logger log = LoggerFactory.getLogger(ArticleSummaryPreviewService.class);
+public class ArticleSummaryService {
+    private static final Logger log = LoggerFactory.getLogger(ArticleSummaryService.class);
     private final FeedSourceService sources;
     private final ArticleRepository articles;
     private final PreferenceVersionRepository preferences;
@@ -46,14 +46,14 @@ public class ArticleSummaryPreviewService {
     private final FeedSourceRepository sourceRepository;
     private final ArticleSummaryResponseParser responseParser;
 
-    public ArticleSummaryPreviewService(FeedSourceService sources, ArticleRepository articles,
-            PreferenceVersionRepository preferences, BrightDataWebUnlockerService brightData,
-            OpenRouterClient openRouter, PlatformTransactionManager transactionManager,
-            ArticleSummaryRepository summaries, FeedSourceRepository sourceRepository,
-            ArticleSummaryResponseParser responseParser,
-            @Value("classpath:prompts/summary-preview.md") Resource prompt,
-            @Value("${spring.ai.openai.api-key:}") String apiKey,
-            @Value("${spring.ai.openai.chat.model:unknown}") String modelName) throws IOException {
+    public ArticleSummaryService(FeedSourceService sources, ArticleRepository articles,
+                                 PreferenceVersionRepository preferences, BrightDataWebUnlockerService brightData,
+                                 OpenRouterClient openRouter, PlatformTransactionManager transactionManager,
+                                 ArticleSummaryRepository summaries, FeedSourceRepository sourceRepository,
+                                 ArticleSummaryResponseParser responseParser,
+                                 @Value("classpath:prompts/summary-preview.md") Resource prompt,
+                                 @Value("${spring.ai.openai.api-key:}") String apiKey,
+                                 @Value("${spring.ai.openai.chat.model:unknown}") String modelName) throws IOException {
         this.sources = sources;
         this.articles = articles;
         this.preferences = preferences;
@@ -86,7 +86,7 @@ public class ArticleSummaryPreviewService {
                         "Збережену версію вподобань для цього джерела не знайдено."));
     }
 
-    public ArticleSummaryPreview preview(Long sourceId, Long preferenceId, String email, boolean retry, Long articleId) {
+    public ArticleSummaryPreview summarize(Long sourceId, Long preferenceId, String email, boolean retry, Long articleId) {
         sources.findOwned(sourceId, email);
         PreferenceVersion preference = findPreference(sourceId, preferenceId);
 
