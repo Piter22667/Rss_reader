@@ -6,7 +6,6 @@ import org.example.rss.model.FeedSource;
 import org.example.rss.service.FeedSourceService;
 import org.example.rss.service.ArticleImportService;
 import org.example.rss.service.ArticleQueryService;
-import org.example.rss.service.ArticleUpdateService;
 import org.example.rss.service.OpenRouterPreferenceService;
 import org.example.rss.service.PreferenceService;
 import org.example.rss.service.UserService;
@@ -46,7 +45,6 @@ class FeedSourceSecurityTests {
         @Bean ArticleImportService articleImportService() { return mock(ArticleImportService.class); }
         @Bean ArticleQueryService articleQueryService() { return mock(ArticleQueryService.class); }
         @Bean PreferenceService preferenceService() { return mock(PreferenceService.class); }
-        @Bean ArticleUpdateService articleUpdateService() { return mock(ArticleUpdateService.class); }
         @Bean OpenRouterPreferenceService openRouterPreferenceService() { return mock(OpenRouterPreferenceService.class); }
         @Bean UserService userService() { return mock(UserService.class); }
         @Bean ViewResolver viewResolver() {
