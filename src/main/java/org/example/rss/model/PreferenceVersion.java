@@ -1,6 +1,7 @@
 package org.example.rss.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.example.rss.model.enums.Language;
 import org.example.rss.model.enums.SummaryLength;
 import org.example.rss.model.enums.SummaryStyle;
@@ -9,6 +10,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "preference_versions")
+@Data
 public class PreferenceVersion {
 
     @Id

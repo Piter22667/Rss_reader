@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.rss.model.enums.MarkdownStatus;
 
 import java.time.Instant;
 
@@ -40,6 +41,13 @@ public class Article {
 
     @Column(name = "full_text_fetched_at")
     private Instant fullTextFetchedAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "full_text_status", nullable = false, length = 16)
+    private MarkdownStatus fullTextStatus = MarkdownStatus.PENDING;
+
+    @Column(name = "full_text_attempted_at")
+    private Instant fullTextAttemptedAt;
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;

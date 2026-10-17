@@ -6,6 +6,9 @@ import org.example.rss.model.FeedSource;
 import org.example.rss.service.FeedSourceService;
 import org.example.rss.service.ArticleImportService;
 import org.example.rss.service.ArticleQueryService;
+import org.example.rss.service.ArticleUpdateService;
+import org.example.rss.service.OpenRouterPreferenceService;
+import org.example.rss.service.PreferenceService;
 import org.example.rss.service.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +45,9 @@ class FeedSourceSecurityTests {
         @Bean FeedSourceService feedSourceService() { return mock(FeedSourceService.class); }
         @Bean ArticleImportService articleImportService() { return mock(ArticleImportService.class); }
         @Bean ArticleQueryService articleQueryService() { return mock(ArticleQueryService.class); }
+        @Bean PreferenceService preferenceService() { return mock(PreferenceService.class); }
+        @Bean ArticleUpdateService articleUpdateService() { return mock(ArticleUpdateService.class); }
+        @Bean OpenRouterPreferenceService openRouterPreferenceService() { return mock(OpenRouterPreferenceService.class); }
         @Bean UserService userService() { return mock(UserService.class); }
         @Bean ViewResolver viewResolver() {
             return new org.springframework.web.servlet.view.InternalResourceViewResolver();
