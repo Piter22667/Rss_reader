@@ -27,13 +27,13 @@ public class ArticleSummary {
     @Column(nullable = false)
     private SummaryStatus status;
 
-    @Column(name = "generated_title")
+    @Column(name = "generated_title", columnDefinition = "text")
     private String generatedTitle;
 
-    @Column(name = "summary_text")
+    @Column(name = "summary_text", columnDefinition = "text")
     private String summaryText;
 
-    @Column(name = "hidden_reason")
+    @Column(name = "hidden_reason", columnDefinition = "text")
     private String hiddenReason;
 
     @Column(name = "model_name")

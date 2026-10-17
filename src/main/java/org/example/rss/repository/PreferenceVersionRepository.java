@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PreferenceVersionRepository extends JpaRepository<PreferenceVersion, Long> {
+    Optional<PreferenceVersion> findByIdAndFeedSource_Id(Long id, Long feedSourceId);
+
     List<PreferenceVersion> findByFeedSourceIdOrderByVersionNumberAsc(Long feedSourceId);
 
     @Query("select max(p.versionNumber) from PreferenceVersion p where p.feedSource.id = :feedSourceId")
