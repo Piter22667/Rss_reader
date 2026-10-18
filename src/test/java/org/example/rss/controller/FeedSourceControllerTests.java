@@ -5,7 +5,6 @@ import org.example.rss.model.FeedSource;
 import org.example.rss.service.FeedSourceService;
 import org.example.rss.service.ArticleImportService;
 import org.example.rss.service.ArticleQueryService;
-import org.example.rss.service.ArticleUpdateService;
 import org.example.rss.service.OpenRouterPreferenceService;
 import org.example.rss.service.PreferenceService;
 import org.springframework.data.domain.Page;
@@ -29,7 +28,6 @@ class FeedSourceControllerTests {
     private final ArticleQueryService articleQuery = mock(ArticleQueryService.class);
     private final ArticleImportService articleImport = mock(ArticleImportService.class);
     private final PreferenceService preferenceService = mock(PreferenceService.class);
-    private final ArticleUpdateService articleUpdate = mock(ArticleUpdateService.class);
     private final OpenRouterPreferenceService openRouterPreferenceService = mock(OpenRouterPreferenceService.class);
     private MockMvc mvc;
 
@@ -47,7 +45,7 @@ class FeedSourceControllerTests {
         when(articleQuery.listOwned(anyLong(), anyString(), anyInt())).thenReturn(Page.empty());
         when(preferenceService.getVersions(anyLong(), anyString())).thenReturn(List.of());
         mvc = MockMvcBuilders.standaloneSetup(new FeedSourceController(service, articleImport, articleQuery,
-                preferenceService, articleUpdate, openRouterPreferenceService))
+                preferenceService, openRouterPreferenceService))
                 .setViewResolvers(views).build();
         views.setApplicationContext(mvc.getDispatcherServlet().getWebApplicationContext());
         when(service.list("owner@example.com")).thenReturn(List.of());

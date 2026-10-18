@@ -15,14 +15,14 @@ public class FeedRefreshScheduler {
     private static final Logger log = LoggerFactory.getLogger(FeedRefreshScheduler.class);
 
     private final FeedSourceRepository feedSourceRepository;
-    private final ArticleUpdateService articleUpdateService;
+    private final ArticleImportService articleImportService;
     private final boolean enabled;
 
     public FeedRefreshScheduler(FeedSourceRepository feedSourceRepository,
-                                ArticleUpdateService articleUpdateService,
+                                ArticleImportService articleImportService,
                                 @Value("${rss.scheduler.enabled:true}") boolean enabled) {
         this.feedSourceRepository = feedSourceRepository;
-        this.articleUpdateService = articleUpdateService;
+        this.articleImportService = articleImportService;
         this.enabled = enabled;
     }
 
@@ -35,7 +35,12 @@ public class FeedRefreshScheduler {
         List<FeedSource> sources = feedSourceRepository.findAllByActiveForSchedulerTrue();
         log.debug("Scheduler refreshing {} feed(s)", sources.size());
         for (FeedSource source : sources) {
-            articleUpdateService.enqueueRefresh(source.getId(), true, ArticleUpdateService.PRIORITY_LOW);
+            try {
+                // Scheduled updates import RSS metadata only, without Bright Data.
+                articleImportService.importMetadata(source.getId());
+            } catch (Exception ex) {
+                log.warn("RSS refresh failed for source {}: {}", source.getId(), ex.getMessage());
+            }
         }
     }
 }

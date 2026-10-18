@@ -26,7 +26,8 @@ public class FeedSourceService {
     }
 
     public List<FeedSource> list(String email) {
-        return feedSourceRepository.findAllByUser_IdOrderByCreatedAtDesc(currentUser(email).getId());
+        return feedSourceRepository
+                .findAllByUser_IdOrderByCreatedAtDesc(currentUser(email).getId());
     }
 
     public FeedSource findOwned(Long id, String email) {
@@ -36,14 +37,20 @@ public class FeedSourceService {
 
     @Transactional
     public FeedSource add(FeedSourceForm form, String email) {
+
         User user = currentUser(email);
         if (feedSourceRepository.existsByUser_IdAndUrl(user.getId(), form.getUrl())) {
             throw new DuplicateFeedSourceException();
         }
         FeedSource source = new FeedSource();
         source.setUser(user);
+
         String name = form.getName();
-        if (name == null || name.isBlank()) name = feedMetadataService.resolveTitle(form.getUrl());
+
+        if (name == null || name.isBlank())
+        {
+            name = feedMetadataService.resolveTitle(form.getUrl());
+        }
         source.setName(name);
         source.setUrl(form.getUrl());
         source.setCreatedAt(Instant.now());

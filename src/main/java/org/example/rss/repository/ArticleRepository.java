@@ -11,6 +11,20 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
+    @Query("select a.id from Article a where a.feedSource.id = :sourceId and a.feedSource.user.email = :email "
+            + "and not exists (select s.id from ArticleSummary s where s.article = a and s.preferenceVersion.id = :preferenceId) "
+            + "order by coalesce(a.publishedAt, a.createdAt) desc, a.id desc")
+    List<Long> findUnprocessedIds(@Param("sourceId") Long sourceId, @Param("preferenceId") Long preferenceId,
+                                  @Param("email") String email, Pageable pageable);
+
+    @Query("select count(a) from Article a where a.feedSource.id = :sourceId and a.feedSource.user.email = :email "
+            + "and not exists (select s.id from ArticleSummary s where s.article = a and s.preferenceVersion.id = :preferenceId)")
+    long countUnprocessed(@Param("sourceId") Long sourceId, @Param("preferenceId") Long preferenceId,
+                          @Param("email") String email);
+
+    java.util.Optional<Article> findByIdAndFeedSource_IdAndFeedSource_User_Email(
+            Long id, Long sourceId, String email);
+
     @Query("select count(a) > 0 from Article a where a.feedSource.id = :sourceId "
             + "and (a.link = :link or (:guid is not null and a.guid = :guid))")
     boolean existsInSource(@Param("sourceId") Long sourceId, @Param("guid") String guid,
