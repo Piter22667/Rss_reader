@@ -1,0 +1,61 @@
+{
+  "id": "gen-1794080366-R9W7Uxw7cNUiLX7nJk3f",
+  "object": "chat.completion",
+  "created": 1794080366,
+  "model": "openai/gpt-6-luna",
+  "provider": "OpenAI",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "message": {
+        "role": "assistant",
+        "content": "[{\"article_id\":3,\"status\":\"OK\",\"generated_title\":\"Стрілянина на центральній площі Кракова: шестеро загиблих\",\"summary_text\":\"7 листопада на Головному ринку в центрі Кракова пролунали постріли. За даними речника Малопольської державної пожежної служби, загинули шестеро людей; поліція повідомила, що кількість постраждалих зросла до 12. Серед поранених — двоє правоохоронців. За попередньою інформацією, стріляли з автомобіля, що заїхав на площу. Поліція затримала підозрюваного; на місці працювали медики та тривала поліцейська операція.\",\"hidden_reason\":null}]",
+        "refusal": null,
+        "reasoning": "**Summarizing incident details**\n\nI need to create a JSON summary of an incident in Ukraine with 40-70 words. There seems to be conflicting details; initially, six were reported dead, with 12 injured total in different updates. I'll specify that six were killed and total injuries are 12, following the updates. There's a suspect detained after shots were fired from a moving car, according to initial spokesperson reports. I just need to ensure the JSON is valid and counts around 55 words.",
+        "reasoning_details": [
+          {
+            "type": "reasoning.summary",
+            "summary": "**Summarizing incident details**\n\nI need to create a JSON summary of an incident in Ukraine with 40-70 words. There seems to be conflicting details; initially, six were reported dead, with 12 injured total in different updates. I'll specify that six were killed and total injuries are 12, following the updates. There's a suspect detained after shots were fired from a moving car, according to initial spokesperson reports. I just need to ensure the JSON is valid and counts around 55 words.",
+            "format": "openai-responses-v1",
+            "index": 0
+          },
+          {
+            "type": "reasoning.encrypted",
+            "data": "gAAAAABq735y0onsuBKnlV5APjhzYmFsGdc5CKh5KSBqqSRXTYqDjDYXGAtxSPs0SnUz3FVsirGfhqMTWgu5tvLycdG9kdkPI2IcGO3nvv6lJUyXTiEvB6i3BGKekmjpYnYzJD4ctvUeLxKv6VEfYMZbnf-Shm-ElExZjbMW49PCISVNlXql9Bv6lAXs417n-bmisrmmPmrhtw0T_K9rRAjN-xUJoHOgTzrevNBXLg3NxiOFngROQLjJe_KPjRIJZ5r-uDDOqZ2qo3zfHd6ypIrdktqijcLEuFI343ajbpigzAD8h3TJzxM7SCDqVYnfhU1x8qGZpZj3sDIjra3glTegR_283O2NNDtquki6W9DitDVp3CnycSFgfRGai5Uv9bAUHxUFWpw1irF3YYPgz-XNH5lJLjKD7Bps17FLMKEna8rrt4LIYbj-3py0L-sklWz0PQkDnQqRxbUz42s-JpAsmonJnAIj0GJI1YD2ReZLDTNDMDmjfZko3hN2yHW-sQ7gIkRCxsmzc2QdtqDgh4EamWFpS_vfJqWSInJ1DNuk9o8AtBIrDgHRiv0xa5RAXJkPj1F9R_D0xyLtNJg0RC_hWcGTynUxlkPwsNFLf5HX1MsvtVsp8uAXU7wjJviZ-uBxII3fLWYl0Fg_Vc0O5gi4Fkwge89erB2-apo2-lwIDuX3571kwgwCSMM7xxWeobvAl--ed4hdDL6kc83HWUIUYKB6YJ5IBBOrXkpIALsRHPu-0cHoUY1bPIAd0Z-4pB3k9mG7FUrdxiLfGkZjWZR7v7ZYo-C9HjyTE6LdjZRbXP4nuRUBNjG4UrbTKAVKfZAGHONVGcPtfpt29_sys6REOqlumz1Dwo9hXP7aGh-ZbzxfXL6XdHPKTQ95BSp2yk2laLCJ_nXqTi63vZTVNk9wDC3jk1QQ3zjzZQRzbC7sFbVto8gzWXcfKPC01t3DhNjBt2Vx5-nVdQCqDDqdEB86hQc0xSFtU7KvYo_b8ur7CwGQfvpO0DL3Z4txe90T0nD-53DJD3BcMbmvK6bzCTk9THIYheGb5r-0MwRjt21QILKTFGMrA59F3jVfTIj__0gGLKrMkWFHOugGwXnZ5ZZXBQY_pRuuxRVO5ZPxeN0HBgBgryFUtWyDwPipkrgFRGJbw4Ysba68vEpWPxsGKlAelQDoEa9s4ri60PxlaItL015mDPwf3HKQxQg_299gH0GYthGIrirfrsNrQ2QTA8gttlMzmaHW7LPE25i2_4yLJE8dfxJFudy6sELlV1TkA8L6yx_9uGNxXIUwKSn0nBu5TCSH8cO9qAyRNDZIoxhV2j3-ny_ZQqnHI9pFcLJc9hqSeM6VPC8SvLEG0kb2DYH49EEz33NMe2SmqSYJeNH3I-RvFrTk9SyR-FGB0uSXFSi2qb1P41Rv8CBfZtXvJrxJH73tPSCJLnCP2GUgSH8r7f94DRw0AKODRjXg31u7S7CLhjgQ1erOk5WYOEYQNehOvvMGYcipqEI-E-PENfTmHngRZd1LOxdg9hWfkx-TAXAYvaDI9SGCf8XIEVAb_4WMXGyoTHPcQWNBAR1WEQhXewc0HqQCHQ4Z_X-LZ2FaZ1azY-dmLjjbw_0xKgBarR9PeOJPoRz3o0QUrkifv__gODCadSk3eic9ghq3NAUWQHtsvjyqi3BxokBdX9-cxUrzFfcN4uJCjJ51IAeR6Xa3i42szrbvabJvGM0rwakLTOb9dN5z7HaSiVY6OA4IoW2_eINY_E2-5U8E0kms-e_TzE8n04TTBgBvSaJZSaMqFBlkHHD4lFim_cwcfT-J0e0inE3wOvz2WfTS9AZOpfgCmLujJZXJqjv9n042YNuqGf5-PlN4Fa09TOi6pI01dzbKBHIkjAH5yKRC_-0afJbENbR873LncaEysUne-c3GpN1AjNyuYYiQYCgzBR_TTJmw-7dbasCixouJ2TSzZIeyjFJ8URXA6bRI2RzaVM6f81KkjU4GSNZyRU51909iJfF-PTBGC8XnHuldJz1sH11cCtcocfGrXStQ4nAeD0qHzVcUJb8qOJwn2WLvjVovKGkYCUsMaziz5IsuhhHQrldBY8sKAffp46wJzXniH7T4WeeDZKT-andNwlFHAupPxPh57eJnUwKjhm1WV2SkQUCAvTfW9vw8v91dc4VXGxCsgX38dm3Bd2_Y3s_GO_bePJIO8kNQxZe8eI_L4uF_4XF4lPQpaxllP45EmguVKtc-u7SjjP50oRs0yDbgeJlMP3dtyobtTyNFd2Q67M8YDlsLBqw4BAnfkgrUxgiTdVjvwXiGjuz2Ukq8mJvWJwQhaka5P1960pmGccTP24mdgf6qBfebyhCtR6IneXkPCNcC792FhwBTeFn4npS8zamsOcnujbEksdwzZ3PnS29WXy__c72R8eOi1HVeVGjnM8REXspOkQw9NgZxPMqUPuw1enlHLIy9Vojxrj9QhfHGiXmkM8x8IBko85j4rvfTWtK0WK62LMlccu5EYSur1qnwF_CNxc2T_s25yrOM-QPUF0HDLsUeogx7Ny98QV1_AFbfcv5uxIw9CnhhNLkXtUKItr3Nlj0k2Rg39ThXmwpGkkgATIZ0jIG_-t4nHUESXDyqjh_TejWitkghLfMcBjKMwTnj2rOhq2Fm7Wn2jnV3ckPMk2H3Tx3jZvWIeMsDG2W_1I2eB3G5OU1US8iY-fFLmfPhmQh0TXM5E33Gl0ZhmMsaQ2EPtBwXYYtAWigWIIjndcPBK2ET47wMYsCpKnZujDsU69ftbnFk04pPn0AaTq1vX6Q87QkxY9M4ticvLQVm53aB-t-zt3LiElpCxpTJUWzN9ESjwH5GTewc2NKF_lFgfk9M7lkWxh3G4CT0zeeb4kzIig2KhEramj-tx0WIAMlN46F7aWTEqaZG7z7nFHY6YKdO92QjOw9quqPK-4n5WpYdzepKETSxIuj7mKvA0p3xu2RxirPO_QvxIiCxg6GBu-y3w5ts8F2rNL-onGGuFEbgkeGvFleO.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+            "format": "openai-responses-v1",
+            "id": "rs_08f8d7b4b69dde12016aef7e6f7c7887d1a7644c6cee3db3da",
+            "index": 1
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 988,
+    "completion_tokens": 284,
+    "total_tokens": 1272,
+    "cost": 0.0002408,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0002408,
+      "upstream_inference_prompt_cost": 9.88e-05,
+      "upstream_inference_completions_cost": 0.000142
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 99,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

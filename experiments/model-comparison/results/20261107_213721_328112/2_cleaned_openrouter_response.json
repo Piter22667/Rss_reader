@@ -1,0 +1,61 @@
+{
+  "id": "gen-1794080323-hqWIXXzur1FAHGcMzdvo",
+  "object": "chat.completion",
+  "created": 1794080323,
+  "model": "openai/gpt-6-luna",
+  "provider": "OpenAI",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "message": {
+        "role": "assistant",
+        "content": "[{\"article_id\":2,\"status\":\"OK\",\"generated_title\":\"Німеччина не планує передавати Україні додаткові Patriot\",\"summary_text\":\"Міністр оборони Німеччини Борис Пісторіус заявив, що країна вичерпала можливості постачати Україні системи Patriot і ракети до них. Подальші передачі, за його словами, створили б прогалини в обороні Німеччини. Він закликав інші країни активніше підтримувати протиповітряну оборону України. Це питання планують обговорити на засіданні Контактної групи з питань оборони України в середині листопада. Пісторіус також заявив, що російські війська не просуваються вперед і зазнають значних втрат.\",\"hidden_reason\":null}]",
+        "refusal": null,
+        "reasoning": "**Creating JSON output**\n\nI need to produce a JSON output in Ukrainian, keeping it between 40 to 70 words. I’ll count to ensure the summary fits, perhaps with a separate title. The main article should mention Germany delivering several systems and missiles, addressing any gaps and calls from others, plus details on an issue meeting mid-November. I'll also include concise comments on the war and losses, ensuring the information is factual with attributed estimates. I’ll validate the JSON afterward.",
+        "reasoning_details": [
+          {
+            "type": "reasoning.summary",
+            "summary": "**Creating JSON output**\n\nI need to produce a JSON output in Ukrainian, keeping it between 40 to 70 words. I’ll count to ensure the summary fits, perhaps with a separate title. The main article should mention Germany delivering several systems and missiles, addressing any gaps and calls from others, plus details on an issue meeting mid-November. I'll also include concise comments on the war and losses, ensuring the information is factual with attributed estimates. I’ll validate the JSON afterward.",
+            "format": "openai-responses-v1",
+            "index": 0
+          },
+          {
+            "type": "reasoning.encrypted",
+            "data": "gAAAAABq735HuQPjsRX4Qniqdo96tIUpoyf76iCPOkTdyeNOb7hpMAbCgV5EUeiriJ0StYSXpLi_THE2trpDPGN0O81Ix3GEldJhuAGrGqUjCwD2V311OuXXlZyCO-0tqXZwpCFOUzsnQwbHrei4mWj2G0nZWIlw1gkIqQrbDKkkoATGZm55pt0Gvjc8jqBuOuLfOGNfwTgIvW5TPR7qIYTgfpoFbhw4zANpo9BE4MEyQY-UBXyx4YAyNjVIM2ppFw8EvyLSW5uwyrHyhag5rdsZxWRc57AYLki_pxLTwhx95fATGKF5RkE_zrbO-Y1cMNUFqqJFQ2BpcZILCUVp9r7UGx9rJSVs6oRfZKOdzpZ7KXX9X6C_xpf2zC7n6O7Wud-k_nWDrwgFsS5T8FuyWOzvmG15ChXMLdmS6nRMrcKOr_eItNiRYppa3LE25zRMXFbuFSmWXhFlxvsFLkyo_lD8cM2hGEOghjalXJ_6Y0m8rfko3li5dfRbfwtdP9EY4EbBy51QOTgzbpIagaBRaxQL5WCaLikSBaILCFNPrDqQaAEyOMPpoiD-bdyKjctOK8TYKH1so34-nUWZUgKMaAjr23Htw1vnC080kNE6zRjI0o7RYm-2nhtyKL99MdKftldDRDNDbXNoiLykwXo-VBttvTvSf2Mno4kMBmd-Q-6kaNVgjDeMtOJa6r8yYkkiSaArRvEoGziNFkyJLOhP8ECRdQtuslyPuWUn3F9GrZe0sPDCXh-yT-c6Jdrku8Jw7cZ9aMppimZ2cBfFKnJ5CqsJbfY6mHpPFaufh-b0h7MTAFG5N_H3aS7bZfDBcRPWwBskZILvq6iwYbzL1dPudy21QICbhHq-ROB2MvwpkNP4DtNTNXXJEe99Kb_3aMNFH4OjGSI0b5mVjp4L9UiL_LLD9Px3n8k-hTRmzZtQ64CQLo-waUTTTzDhzzZBk27Kms1fRD_KjNQ1h4Rb0KX7hvYR4BRte4wyscYnXHKrBwENVnVSsjaiXD4t0ulIGFAjW_ZzR4BZ7TbdAozx16Pmtyd-5hfhh-laLz5mP2z31A_W54aGIyDbEBal9suWiLuQJWx7XEvy_6yL--NZjITX2hr0qap61KfquyuvzdNxjQ9Sgo3jjQRyQI3bWbeO1zIl4MIhmesdKRyDFAPOEsImROyNFhaDmxUlxX2aNB0AApuBPH_VGRFhGm5uhv2evYc5aKt3YCeeq3Lk19UXhAJha115A9MOpXO6RUQsQ6ULPr1-DvNPQkv4p8BxpRAuCLFn_krZKWh94i9KuTGBDFPNif0feFpNEhE5q9JGPMC6ZiLJ8dKRwNOxKq3ka6rEm8Owm_V9NmajeUlH18BzdV2ObdAaD9Zlf-PSO9d0z40rXL1ZRJQsiQYoc0xwzMWhVd8_ZX-9NbkC3lMPTnQhHXL8ZlGmi9YDaEaLgMIQ0UZJH-kWh5ThDkrl9JXK01ej16TClvRAbQX7S9pBCSz-ZEwDtUmuC0lZhHee9EGk1UyDg5HHhVebQXxllOlHqp6sfFix0DcWlAGZiHhBMXtItbuuXGMxifi8f3HfzLh-ITphG5-6clHlq-oERCZglx7zkpICLFX0msEE4R-ro2__-2_t0UT47ruWxNgtz4r-Hp9R6IiMVclsOyxwjvZJ5-LOGqxvXvpz6s3ZkVpIErDeCu42PAXYXkPFVJ7-JNHnp5u3VTi2PKVnAzNyfXXDHvHVo9Pph1XC47sDzcN2zj6V0NNKuqKtU0gMUiunfw5h23tQzpNBljR9v9ykn04MqeMcCvsE4Sjrk3YiccsQO-cs1bazYfFSvY8i_yBTR1q0BKsXmpYCqqsCkeNIxzwz9mb5bhq4m7Rs6l5AKHAs8ZtidkX6fEWQsRZTY-kumR8eqzibTrxdPmxKvlYSxhIfcdIFEnVdT_lfX4vL7YKjpFp8wP6bwPeIecUdcetHBWSnzgXHpQykpOOC4afJNimOUdkhqnEco4ugw9b-DyajK0Bn9khXWMvrlYroIAlz4r0a6F2XaKmrXmgBBgWgzY35rqIPjzNdLU3KR_2IQPFlfO9U5GRmKuEYqM8Og8l93UPe77DX0gc4bc5abY-kRWd6zSz4XUEy0IK4AwAEJG2uftmTM9HeQPVraKqDTV7Nro6TC__mH5c0WBnBy2SnhlldCdI_ngUW9_isNH1RvYuxy7uxWzXkso6GwaJiedQqWl2uVyV5jj4t69GEbSzbCX_FQg6myNUEujbTFufDnV-nBCaDz_H6-FqeIYlcaqiZKrkKSBw8ZpJDCHaEHZgjZtK8UQc1zFc2QFUK0BNegcKtJVbexXy3zK3CFIYVwKsnjCV_XorfLkIherlNnUIT18U3J76187RAqxcYdmlbePJiWczSn06W8a0tQzte1n4l9IPjcBqd4imFU51ciSSDl5om_CGvaSayteYqP0g3n--mgE4n6wdaPNXs1lLGgN-B2tOhWd0LSc0fY9vygYqc22rNdSxyWP6OvWGPZ8wU5Whm_QN1z74ZzWZhm-tXooUYzINMZ36uVUyNsTx_rqVz1GEX17hIrjFCpcyz9SLkj5UDjA3qCxaCuGj8BpRA4ioCyJNo8nCvdWiFOD8JjetvuDHayjlT-z0OvXAIVd-_U9LQBmjb6yZPm7pmRLrSu8ghzyLchD7Ka_qzKoJCuOExV07LOd4wjFUPEmkm1iPasWhb.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+            "format": "openai-responses-v1",
+            "id": "rs_0726b03de8a96c10016aef7e448aa487d1a719061b5c12c953",
+            "index": 1
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 934,
+    "completion_tokens": 269,
+    "total_tokens": 1203,
+    "cost": 0.0002279,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0002279,
+      "upstream_inference_prompt_cost": 9.34e-05,
+      "upstream_inference_completions_cost": 0.0001345
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 73,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

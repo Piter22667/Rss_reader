@@ -1,0 +1,13 @@
+{
+  "article_id": 3,
+  "provider": "local",
+  "variant": "raw",
+  "requested_model": "lfm3:1.7b",
+  "returned_model": "lfm3:1.7b",
+  "truncated": false,
+  "structure_ok": false,
+  "word_count": 101,
+  "length_ok": false,
+  "validation_error": "Очікувався масив з одним об'єктом",
+  "seconds": 22.67
+}

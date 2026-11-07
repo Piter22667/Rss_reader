@@ -1,0 +1,61 @@
+{
+  "id": "gen-1794080350-Kweox6RsMkXXNAwR1KIZ",
+  "object": "chat.completion",
+  "created": 1794080350,
+  "model": "openai/gpt-6-luna",
+  "provider": "OpenAI",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "message": {
+        "role": "assistant",
+        "content": "[{\"article_id\":3,\"status\":\"OK\",\"generated_title\":\"Стрілянина в центрі Кракова: шестеро загиблих, 12 постраждалих\",\"summary_text\":\"7 листопада на площі Головний ринок у центрі Кракова пролунали постріли. За повідомленням речника пожежної служби, стріляли з автомобіля, який проїжджав повз натовп. Загинули шестеро людей, ще 12 постраждали, серед них двоє правоохоронців. Поліція затримала підозрюваного; на місці працювали медики та тривала поліцейська операція.\",\"hidden_reason\":null}]",
+        "refusal": null,
+        "reasoning": "**Producing JSON for a report**\n\nI need to create a JSON entry regarding an incident in Ukraine. It should capture the conflicting stats accurately: 6 dead and 12 total injured, with additional earlier totals. This incident happened on November 7 in the main market square of Krakow, where shots were fired from a moving car. A suspect has been detained, but I want to avoid labeling this as terrorism since that hasn't been established yet. I'll aim for around 55 words, including a title, and ensure it's valid JSON.",
+        "reasoning_details": [
+          {
+            "type": "reasoning.summary",
+            "summary": "**Producing JSON for a report**\n\nI need to create a JSON entry regarding an incident in Ukraine. It should capture the conflicting stats accurately: 6 dead and 12 total injured, with additional earlier totals. This incident happened on November 7 in the main market square of Krakow, where shots were fired from a moving car. A suspect has been detained, but I want to avoid labeling this as terrorism since that hasn't been established yet. I'll aim for around 55 words, including a title, and ensure it's valid JSON.",
+            "format": "openai-responses-v1",
+            "index": 0
+          },
+          {
+            "type": "reasoning.encrypted",
+            "data": "gAAAAABq735iZaFXoOam95uU-b-FC0ON_JBdE89h_ZRdEsuz2TcpjZwl9yKntg2sY4GSr-MfiOT9CZTRRGiHchstRj_L7iW7tflgP4EDxn3lbQiKSb44dBRNvsDzyisce3HxEyUEvCzct6dj_2YUhsl2c-z6o7kOTnK_zp-WWR4tJBMyNcXNizJpTKkmkIpr-Q9UD-GcthESDuovBSeECP5x_qNrFnJ2wJolpd-JTRRPY_dEbslj8le7lkJrcu-azGDf7MTHg72sLEpka8YD8_B0kRPaXpDR29QygXOh0tzKJQEFl9zYxvgdPMDxfkwhQoRM1sUmUOIyth1dakuHslYwJKTLvu6WvFH09hoz6Wm9Z3O1UeKzRKhlchIbl1QZln8GGR1VOd4_IKVj_XqzBPBDvMIGsHBAvccxYKh5emjrWKUX55znvuvHuhENbPGT0Ngp87Tkrma2LGIdUTUJ1BzCHIpixq2FCB2FFPJrPcsBr818QzzNWUs4WGfU87SHZBho88b8uZKhoNNuN1KrDcY2BmzOx4uwsCJuFD8gYvv973RqH710Tv2oOXOW_LFt08pi5ftOaPINR32-f73UwUhREtkH7Ys3Za--A_tiS27_dV7GP0yKfQYcraADYW5sBvJHW5CEzM5zNwPAkS7LgLuSf7-cBNl5QETSb1ihdiGggmqdCljCRCjp2xi6oY1v8mcDHLS4Oi0Om5vk26bHDJnbhCTK8Ojq1UZUugY5BecspkyjzLfsLkyFFRm66mmJlZCEODrdPBAu_0UQJcU9qnQlKhlWLQGLzrG7LkpreW0faD4h4GcFIulaNGUkCyCl8r6ebLuSFbSRTZugd0CHbr994sSCOR5xWJmH07sMPbpT070eDFdXr0G03QQYuKkxQrZm_8FHKBU_jsXiSPsumHCWe3yjvcJCQs9pI0hBB3D83ane16GMSk80X4tMKGgyETjSA8a49_Tc2QUDBkPyyZw_xn-a5bCwXxn26vpR8RIh0pQwJYL9YeeG7JiBw4GpDp0xpDtfhHUu6dg_NnUMPx79Dpod4P8zfcmS07eOo-Rm2GhOUpdqbccwKj32_q9ve0G5Z583rC4PID8VDpcwWgHb6cBx4TGTGhpxbw0ZMBbfPM2G8rROrlEM7Ts1qyC2q_CdMC_bwhsv9aihWTZP6Hlvpn-w8G4955BnqO1HyEfGL5e-m_o7HWN1bLU9rjgbW7PwKuIFzlgtLRb_pLbmWX2Z1cG94fxmBNZnRBeHFc_fFPx9isvMNsJ8CNTHXCT2NPbyCUwNw2cYHSSAsyxbjAFGANVgM-094vX3S4J1uMKE1TopGwzXZzb1TGBH82dJjti9lhQA0tta5b-VdhgxmJ_UmgjGH0LYWjBHxBwLPJwNNUlznLDJXUopBYRgeVBdwFVbP95FWcy6yIS65Vi_-4ZpTfgAgIie4G9NDhYN6oO5ENqqNXwCLQGG1KH2SJinS4m-6Otq6q8b_R-H2eRCYqUSksaVC1hOnJ26ad1f-rUTs8ZjIKJ-DmVmLzWmjUG-L3qekTEtqhrP-a-5pMf3aLwePU5lyECeECFxV4A0d_9Ttn9i37vv2VyjjUgreiba-X6uH4Q-i7FmzY3dYiSeTsdS_v5uEwBnPaC_9Vbl21PImWp2a3hFvHn5Ycw2WPhDjLZmyR_3U1Q0jfepHL0Qp4xdVASy3HnLkMs13PmG4dc22U1X0Lipt50lC8-Uyev4LzhlieYp0J_urV6aGCDxlc4t0RIjd0lpzyIqiFf5Ldq_GqMbB-diFx-B1TXvso48UhXfPBEzx7J3Hm2G0O6FOVypibsKXncYgqCHWsGaRXrbUabRnX3aeHP8iApKMhMoK5CUKgri5i9y6aQxvFGJs6Q302bjQ5FLxGtXe9-EERejU3AAKv0Xyaxs3q4qY0_yWzgsBKKCUajrHVmlJUprJVeK8jTKMPnayXvB5dEmCk_mMyj6MUUBKv3Em1OrvUTj_qlxl83bIh1v9puc9lNxs8BmSdOlxaErgJa4Z20VWSx8h40v6ZjfGVP9TTbA2fd8Xeyc6mZhy_NDdy6s-_1wgUR7B4TUZtmBawfnvRuJjVt1yHhOFnX3CU55xaanf0fKZnzznBcoM4HDFaupdCyL03w5GSkuZX6VbTHaEIlgFmDyWdITERcf8_frt_m_nCtRKroBk_VTDvwRuSSLAcAFjQUpvAnwoVOuPDHNoLoi4DC5LduU254EvncHb2qa1EMIot2dwz9S9NmC6xyVgEvLawm2I7KMPm5qUxAM_mM9Lud5gbtO0jIDA2u-xLmfZrzutSccSazLWoLxg0zUTk3t5wfYurtDhZ3rIY6BNrUdBCCizfIKthkXrnX6QybUAJqrPnb3ZPWsvACKCQuuYVNxSQHYVGqWFfsxY56PPc5shGE-Gz0weYd8kC8WfI-EsFK4gA5wKDtrpM13nYkn7-KTQntn4GH0Opf-XzicV02g_VX__c5l881IOuz8t2gxjLVT9s7ENYOi1yTspoBR6tefguXirixQy5dfYtlSpE6jL60fRI7iy2gIHho3nZZFeqaTUORHykLYF7NJbcouZ-CCfxwK6j_T3gvnYAiQS-CSV5Dt0h5Pbl2BjDQ1fcAEyaUtsFT1e0CXAWtmjYgKqn7LWZD0aQjJOolWe-FPXDSHE-RBIyLq6Vyk42doVxsWj-vE7gKjM2ORfJLgAzak6aJ2CqbMfNRdLm21nNH7KjxaNyZx1TYfbLZM-jYyXzT1MPPPGerpKhS2s-H-x1IeHg9dqJxP6cQo6PrXvJM4KvlhsADCguid8yLrPld8cvLTJCWCPGrDHUOMdOrWsVn_FcSlXgp83NEPrWNaG3yjYtNGAibsWV3U9f5RA1k=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+            "format": "openai-responses-v1",
+            "id": "rs_051c06b9a043868f016aef7e5f8de087d19e5ad17fc1342c56",
+            "index": 1
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5127,
+    "completion_tokens": 252,
+    "total_tokens": 5379,
+    "cost": 0.0007668,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 5124,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0007668,
+      "upstream_inference_prompt_cost": 0.0006408,
+      "upstream_inference_completions_cost": 0.000126
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 87,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

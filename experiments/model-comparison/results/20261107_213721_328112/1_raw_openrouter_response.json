@@ -1,0 +1,61 @@
+{
+  "id": "gen-1794080270-X6bSjfOgLpWiBVk04W0l",
+  "object": "chat.completion",
+  "created": 1794080270,
+  "model": "openai/gpt-6-luna",
+  "provider": "OpenAI",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "message": {
+        "role": "assistant",
+        "content": "[{\"article_id\":1,\"status\":\"OK\",\"generated_title\":\"Демократи обговорюють допомогу Україні на 15 млрд доларів\",\"summary_text\":\"Демократи США обговорюють пакет військової допомоги Україні обсягом близько 15 млрд доларів і посилення санкцій проти Росії, повідомляє Financial Times. Серед можливих заходів — фінансування енергетичного сектору, ракети-перехоплювачі, розвідувальні дані та підтримка Starlink. Законодавці також хочуть переглянути санкційне законодавство й перевірити зовнішньополітичні рішення адміністрації Трампа. Для подолання можливого президентського вето їм знадобиться підтримка республіканців.\",\"hidden_reason\":null}]",
+        "refusal": null,
+        "reasoning": "**Creating JSON for Ukrainian Article**\n\nI need to generate a JSON structure for a Ukrainian article. It should contain between 40 to 70 words and include a title. I want to make sure that the claims in the article are reported accurately but also note that the plans mentioned are not approved yet. It's essential to stay within the word limit to ensure clarity while conveying the intended information succinctly.",
+        "reasoning_details": [
+          {
+            "type": "reasoning.summary",
+            "summary": "**Creating JSON for Ukrainian Article**\n\nI need to generate a JSON structure for a Ukrainian article. It should contain between 40 to 70 words and include a title. I want to make sure that the claims in the article are reported accurately but also note that the plans mentioned are not approved yet. It's essential to stay within the word limit to ensure clarity while conveying the intended information succinctly.",
+            "format": "openai-responses-v1",
+            "index": 0
+          },
+          {
+            "type": "reasoning.encrypted",
+            "data": "gAAAAABq734QSWEDXaS9MrOUBwdtnhR3lPDdIDJ2HYLHbEhiFs4KAS8bTv2qQc-tIo_73WkL3Ca1hSEpJONRurSm43zsQSLfgaqbv6CkIW5qlq60TyRnwTdFbvFMyNcGXuFPTuZHtNlGvE2DD7Rn2Y1BQMuFVGd6jAvwVFn7KnwygJaikSe3ve26Id0xZjAJgbQXSoSK0T9AfVoutf0v5N9lrRrQz8O4lySovuoXaNm4GJoeVKZ8aW-N61SYHX0lwJok7Yq2tb2c3jcj3BF-vMeYjNTLuQSVfRUBWeG47GKugs1UEEsY23qWMLMDrcrCi7wp3pEu7a9Wxx4dJrTzWtREjnzb6oLnPG_pbfNShiyPXCaAOAxehUh_LC2aHqRZyPymX3mTZZNCmrzHjHS7xthuUZCgMsHJ4HhuU4Fkxpktdjd-_mi1MCSr5KD1kirf_8K6EOyffyJZaS6sLg722AVcVdhlcfWjZt_kPYNVu15XXlfvbU916H_cGAybGEhfxPymzACpCpzIgXiGC2QUgxxyjspoxou_eRvi0MKcQbDRrHhwS_S0d0W214V9tVAF7pIv30Xnk6N2LEp3qFgXtjvV5Anw264YJ5kq7vtCK8uKbzq1UchO1iKVVhH0bcLrzv3dhgJ58PIkzdseEyt7ZtvhGVJtEs_xkjeFxX4ub9O-FKBQ9dq7MnrCNjIWWhyNu4YGyK8IhSyGUhDGtah9t-wRsBeLsAYFer3b6sr5ccCphm5rsTR0KLhtnP4wL8qDcN5JYmQB1jdSQ7T4cRwOSvuVHD72_cpWINiAe4NVw2fEYonA-LYv_20kHkCPnaWVDs8AfEYTVDx06OqrgMuB6p-opt0aqDly50PmJJOlZf-Zvucx72aHQZMrt3Iv3AaRR3gI46na9mtc8TS9tW86FfolzcT2m4-8oBoBijbiO6VQLd0Xzu_Z4ODuTf1hXlALMnkBQutDeLlPs-QQLlzy5k7v_i4rbmuTgzg_zbuTkQeKFV8bXMojJ_IyX2qb2wIiBwbcQ7wZSqdN_CcLfYayc785WCMq3Z--Hx3kKdYstcflBznsnBickhcAqxQVeFwPGRwgW1oHeadHbNMOJRuoEtaz98UcNcKx51Leqkv2-dEcQcS0d8DZBTInCpBHFn9zv3peVv30gc2NU4lhvnzvWR_-5WD4zR98GrvR-XV7mKdFTuke_j8HE0uTOMn-occJXs__8B72VnFPnfR1954hPy9A26JlltpnIQJFjIWnMxUqqWiKFmDpPfGeXUpsuq_osMtpw-yx5eJBcgZgQYkZtpfRLeZunUKMwhEK-yjQUYBf0IGvWccnrsbWhCyRmCEvjCzZE7O-Ko9mLO0fvJhk15sFJNlivbxpo0Lp_M2yE62BbK6kVZDOuaty7Sh4X01aSK1p-FiV2vy7vYGK0o8No4Vbe_SX1BUARKfsT2v5oCDYAAxdJKSIGpL9Cv39xZAF11cPbhOLnlgGzLNrTXyEh0aqrJCiU9Y2aq4WpjUCyEBxqfjjconGhQBWb00nu5ZsfdDVtr0N4mL8PBdTbApXU87NFMc6vqPdlty1mjUhZochvs71ukVksNFdvtuunOiJwH-_KMmTLlIywmAwFLVoP7KG2-Yuw7UF-9YXhhQAj2jEM0Wk5YDsFTZHVtx7UVdsPHw1CB59gMOPOCD82YtOKjHHQUcFZvIl3LZF6Gel0k6F0ziJs6kXVqD4R2bMq6Chq0itaenHNM7hrpNarQZSf5aFVpdM54QLxe68FPdgTgWk7ItTPKho40gQDmqXo9s_-j_8U6SJJWgjshKPugY54jLJv_muMHoJJRPUbgkcGZfxpCdlB9rInUKKGht_cJPpL0PMLBlQeOLrHl10-9QhmhOrZwF4HeUz6j9bHgn-Gl1LW-vohs9C9dStIZhKjjdu-Fa-sHNAZwj9jhrRtcRqWZj1BxiurNDybjGjstXhu46w5MruisKYHetnyTKNFXhKMsMq77v7WK0V7tn10A43hzhJrcxUKPcjnmvaG9qCM4So1ZIKjtS_b6JzAMzinCaVDCegwwr08ffTKCwcQZrdeXRrKGt0DA_qniZ5etq1429nsrl0XKuzKzvLtH7WTvJFYsLxSNqk8bTKl2gxwbKqWZ6QT955vVHjLQ==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+            "format": "openai-responses-v1",
+            "id": "rs_01bbc84c2a0ce26d016aef7e0f29b487d19a9727e388fc5d25",
+            "index": 1
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5468,
+    "completion_tokens": 221,
+    "total_tokens": 5689,
+    "cost": 0.000793925,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 5465,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.000793925,
+      "upstream_inference_prompt_cost": 0.000683425,
+      "upstream_inference_completions_cost": 0.0001105
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 33,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

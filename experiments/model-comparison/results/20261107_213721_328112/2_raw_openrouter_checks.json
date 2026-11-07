@@ -1,0 +1,12 @@
+{
+  "article_id": 2,
+  "provider": "openrouter",
+  "variant": "raw",
+  "requested_model": "openai/gpt-6-luna",
+  "returned_model": "openai/gpt-6-luna",
+  "truncated": false,
+  "structure_ok": true,
+  "word_count": 59,
+  "length_ok": true,
+  "seconds": 2.93
+}

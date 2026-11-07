@@ -1,0 +1,10 @@
+{
+  "providers": "both",
+  "local_model": "lfm3:1.7b",
+  "cloud_model": "openai/gpt-6-luna",
+  "local_url": "http://localhost:11434",
+  "temperature": 0,
+  "max_tokens": 1024,
+  "context": 8192,
+  "dry_run": false
+}
