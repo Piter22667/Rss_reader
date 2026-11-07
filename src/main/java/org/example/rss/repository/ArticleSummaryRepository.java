@@ -2,12 +2,14 @@ package org.example.rss.repository;
 
 import org.example.rss.model.ArticleSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.example.rss.model.enums.SummaryStatus;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +33,21 @@ public interface ArticleSummaryRepository extends JpaRepository<ArticleSummary, 
             + "or (coalesce(s.article.publishedAt, s.article.createdAt) = :date and s.article.id > :articleId))")
     long countBefore(@Param("preferenceId") Long preferenceId, @Param("status") SummaryStatus status,
                      @Param("date") Instant date, @Param("articleId") Long articleId);
+
+    @Query("select s from ArticleSummary s join fetch s.article "
+            + "where s.preferenceVersion.id = :preferenceId and s.status = :status "
+            + "order by coalesce(s.article.publishedAt, s.article.createdAt) desc, s.article.id desc")
+    List<ArticleSummary> findForGrouping(@Param("preferenceId") Long preferenceId,
+                                         @Param("status") SummaryStatus status, Pageable pageable);
+
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("update ArticleSummary s set s.summaryGroup = null where s.preferenceVersion.id = :preferenceId")
+    void clearGroupLinks(@Param("preferenceId") Long preferenceId);
+
+    @Query("select s from ArticleSummary s join fetch s.article a join fetch s.summaryGroup g "
+            + "where s.summaryGroup.preferenceVersion.id = :preferenceId "
+            + "order by coalesce(a.publishedAt, a.createdAt) desc, a.id desc")
+    List<ArticleSummary> findGroupedForVersion(@Param("preferenceId") Long preferenceId);
+
+    List<ArticleSummary> findByIdInAndPreferenceVersion_Id(Collection<Long> ids, Long preferenceId);
 }

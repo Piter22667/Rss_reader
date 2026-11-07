@@ -101,6 +101,7 @@ document.querySelectorAll('[data-import-form]').forEach(form => {
     if (window.summaryView) window.summaryView.changeVersion(version);
     updateProcessingControls();
     if (window.summaryBatch) window.summaryBatch.changeVersion(version);
+    if (window.summaryGroups) window.summaryGroups.changeVersion(version);
   }
 
   function hasUnsavedPreferences() {
@@ -118,13 +119,15 @@ document.querySelectorAll('[data-import-form]').forEach(form => {
     inputWarning.hidden = cursor >= 0 && !unsaved;
     inputWarning.textContent = cursor < 0 ? 'Спочатку збережіть вподобання.' : 'Є незбережені зміни — спочатку натисніть «Зберегти».';
     const batchRunning = window.summaryBatch && window.summaryBatch.isRunning();
+    const groupRunning = window.summaryGroups && window.summaryGroups.isRunning();
     const saving = saveBtn.disabled || improveBtn.disabled;
     const allowed = !previewBusy && !unsaved && !saving;
     if (window.summaryView) {
-      window.summaryView.setBusy(previewBusy || batchRunning);
-      window.summaryView.setProcessingAllowed(allowed && !batchRunning);
+      window.summaryView.setBusy(previewBusy || batchRunning || groupRunning);
+      window.summaryView.setProcessingAllowed(allowed && !batchRunning && !groupRunning);
     }
-    if (window.summaryBatch) window.summaryBatch.setProcessingAllowed(allowed);
+    if (window.summaryBatch) window.summaryBatch.setProcessingAllowed(allowed && !groupRunning);
+    if (window.summaryGroups) window.summaryGroups.setProcessingAllowed(allowed && !batchRunning);
   }
 
   function showSummary(data) {
@@ -145,6 +148,7 @@ document.querySelectorAll('[data-import-form]').forEach(form => {
   async function runSummary(articleId) {
     if (previewBusy || hasUnsavedPreferences() || saveBtn.disabled || improveBtn.disabled) return;
     if (window.summaryBatch && window.summaryBatch.isRunning()) return;
+    if (window.summaryGroups && window.summaryGroups.isRunning()) return;
     const version = versions[cursor];
     previewBusy = true;
     updateProcessingControls();
@@ -162,6 +166,7 @@ document.querySelectorAll('[data-import-form]').forEach(form => {
       if (!response.ok) throw new Error(data.error || 'Не вдалося повторити обробку.');
       showSummary(data);
       if (window.summaryView) await window.summaryView.refresh(data.status === 'OK' ? data.articleId : null);
+      if (window.summaryGroups) await window.summaryGroups.refresh();
       if (window.summaryBatch) window.summaryBatch.changeVersion(version);
     } catch (error) {
       previewStatus.textContent = error.message;
@@ -178,6 +183,7 @@ document.querySelectorAll('[data-import-form]').forEach(form => {
 
   if (window.summaryView) window.summaryView.retryArticle = runSummary;
   if (window.summaryBatch) window.summaryBatch.onStateChange = updateProcessingControls;
+  if (window.summaryGroups) window.summaryGroups.onStateChange = updateProcessingControls;
   updateUI();
 
   olderBtn.addEventListener('click', () => {

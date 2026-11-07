@@ -94,11 +94,17 @@
           <div class="reader-tabs" aria-label="Режим перегляду">
             <button id="articlesTab" class="reader-tab selected" type="button" aria-pressed="true" aria-controls="articlesReader">Статті</button>
             <button id="summariesTab" class="reader-tab" type="button" aria-pressed="false" aria-controls="summariesReader">AI-підсумки</button>
+            <button id="groupsTab" class="reader-tab" type="button" aria-pressed="false" aria-controls="summaryGroupsReader">Тематичні огляди</button>
           </div>
           <div id="summaryBatchActions" class="summary-batch-actions" hidden>
             <button id="summaryBatchBtn" class="btn import-button" type="button" disabled>Обробити перші 20</button>
             <button id="summaryBatchStop" class="btn btn-secondary" type="button" hidden
                     title="Зупинити порцію після завершення вже запущених статей" aria-label="Зупинити AI-обробку після вже запущених статей">Зупинити</button>
+          </div>
+          <div id="summaryGroupActions" class="summary-batch-actions" hidden>
+            <button id="summaryGroupBtn" class="btn import-button" type="button" disabled>Створити огляди</button>
+            <button id="summaryGroupStop" class="btn btn-secondary" type="button" hidden
+                    title="Зупинити створення оглядів після завершення вже запущених" aria-label="Зупинити створення тематичних оглядів">Зупинити</button>
           </div>
         </div>
         <div id="articlesReader" class="reader-panel">
@@ -153,6 +159,31 @@
             <span id="summaryPageLabel"></span>
             <button id="summaryNext" class="page-link" type="button">Наступна →</button>
           </nav>
+        </div>
+        <div id="summaryGroupsReader" class="reader-panel" hidden>
+          <div class="summary-status">
+            <div class="summary-status-line">
+              <p id="summaryGroupCounts" class="summary-counts" role="status"></p>
+              <p id="summaryGroupProgress" class="summary-progress" role="status" aria-live="polite"></p>
+            </div>
+            <p id="summaryGroupNotice" class="summary-notice" role="status" aria-live="polite"></p>
+            <details class="summary-info">
+              <summary>Деталі обробки</summary>
+              <div class="summary-info-body">
+                <dl id="summaryGroupDetails" class="summary-detail-grid" hidden>
+                  <dt>Вибрані вподобання</dt><dd id="groupSelectedVersion">—</dd>
+                  <dt>Фаза</dt><dd id="groupPhase">—</dd>
+                  <dt>Статей у наборі</dt><dd id="groupTotalArticles">—</dd>
+                  <dt>Опрацьовано статей</dt><dd id="groupClassified">—</dd>
+                  <dt>Оглядів</dt><dd id="groupCount">—</dd>
+                  <dt>Завершено оглядів</dt><dd id="groupCompleted">—</dd>
+                  <dt>Помилок</dt><dd id="groupFailed">—</dd>
+                </dl>
+                <p id="summaryGroupMessage" class="pref-hint">Спочатку збережіть вподобання.</p>
+              </div>
+            </details>
+          </div>
+          <section id="summaryGroupList" class="article-list" aria-label="Тематичні огляди" tabindex="0"></section>
         </div>
       </th:block>
       <div class="empty-content welcome" th:if="${selectedSource == null}">
@@ -230,6 +261,7 @@
 </script>
 <script th:src="@{/js/summary-view.js}" defer></script>
 <script th:src="@{/js/summary-batch.js}" defer></script>
+<script th:src="@{/js/summary-groups.js}" defer></script>
 <script th:src="@{/js/home.js}" defer></script>
 </body>
 </html>

@@ -41,7 +41,7 @@ public class ArticleQueryService {
         return value == null ? null : DATE.format(value);
     }
 
-    private String safeLink(String link) {
+    public String safeLink(String link) {
         if (link == null) return null;
         try {
             URI uri = URI.create(link);

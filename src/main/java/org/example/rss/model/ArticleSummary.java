@@ -23,6 +23,10 @@ public class ArticleSummary {
     @JoinColumn(name = "preference_version_id", nullable = false)
     private PreferenceVersion preferenceVersion;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "summary_group_id")
+    private SummaryGroup summaryGroup;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SummaryStatus status;
