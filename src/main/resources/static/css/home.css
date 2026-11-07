@@ -145,6 +145,20 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .page-link { color: var(--accent); text-decoration: none; }
 .page-link:hover { text-decoration: underline; }
 .summary-preview-loading::before { content: ''; display: inline-block; width: 12px; height: 12px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin .75s linear infinite; margin-right: 8px; vertical-align: middle; }
+
+/* Topic overviews */
+.summary-group-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.summary-group-category { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 99px; background: #f1ecff; color: #5b3fa8; font-size: 11px; font-weight: 600; letter-spacing: .2px; }
+.summary-group-meta { font-size: 12px; color: var(--muted); }
+.summary-group-card .article-title { margin-bottom: 8px; }
+.summary-group-card .summary-text { margin-top: 0; }
+.summary-group-articles { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px; font-size: 13px; }
+.summary-group-articles > summary { width: fit-content; cursor: pointer; color: var(--accent); }
+.summary-group-article { display: flex; align-items: baseline; gap: 10px; padding: 6px 0; border-bottom: 1px dashed #eee; }
+.summary-group-article:last-child { border-bottom: 0; }
+.summary-group-article .article-date { flex: 0 0 auto; }
+.summary-group-article .article-original { margin-top: 0; }
+.summary-group-article-title { color: #50505a; overflow-wrap: anywhere; }
 @media (max-width: 900px) {
   .article-list { flex: none; overflow: visible; padding-right: 0; scrollbar-gutter: auto; }
 }

@@ -6,6 +6,10 @@
 
   const articlesTab = document.getElementById('articlesTab');
   const summariesTab = document.getElementById('summariesTab');
+  const groupsTab = document.getElementById('groupsTab');
+  const groupsPanel = document.getElementById('summaryGroupsReader');
+  const batchActions = document.getElementById('summaryBatchActions');
+  const groupActions = document.getElementById('summaryGroupActions');
   const list = document.getElementById('summaryList');
   const counts = document.getElementById('summaryCounts');
   const pagination = document.getElementById('summaryPagination');
@@ -27,14 +31,20 @@
 
   function show(mode) {
     const ai = mode === 'ai';
-    articlesPanel.hidden = ai;
+    const groups = mode === 'groups';
+    articlesPanel.hidden = ai || groups;
     summariesPanel.hidden = !ai;
-    document.getElementById('summaryBatchActions').hidden = !ai;
-    articlesTab.classList.toggle('selected', !ai);
+    if (groupsPanel) groupsPanel.hidden = !groups;
+    if (batchActions) batchActions.hidden = !ai;
+    if (groupActions) groupActions.hidden = !groups;
+    articlesTab.classList.toggle('selected', !ai && !groups);
     summariesTab.classList.toggle('selected', ai);
-    articlesTab.setAttribute('aria-pressed', String(!ai));
+    if (groupsTab) groupsTab.classList.toggle('selected', groups);
+    articlesTab.setAttribute('aria-pressed', String(!ai && !groups));
     summariesTab.setAttribute('aria-pressed', String(ai));
+    if (groupsTab) groupsTab.setAttribute('aria-pressed', String(groups));
     try { sessionStorage.setItem(modeKey, mode); } catch (ignored) { }
+    if (ai && preference) loadPage(currentPage);
   }
 
   function clearBadges() {
@@ -176,6 +186,7 @@
       return loadPage(0);
     },
     show() { show('ai'); },
+    showGroups() { show('groups'); },
     refresh(focusId = null) { return loadPage(0, focusId); },
     async refreshCurrent() {
       const preferenceId = preference ? preference.id : null;
@@ -207,6 +218,7 @@
   };
   articlesTab.addEventListener('click', () => show('articles'));
   summariesTab.addEventListener('click', () => show('ai'));
+  if (groupsTab) groupsTab.addEventListener('click', () => show('groups'));
   previous.addEventListener('click', () => loadPage(Math.max(0, currentPage - 1)));
   next.addEventListener('click', () => loadPage(currentPage + 1));
   let mode = 'articles';

@@ -73,8 +73,9 @@
     if (data.preferenceId !== version.id) status.textContent += ` (версія ${data.preferenceVersion})`;
 
     const key = `${data.preferenceId}:${data.processed}:${data.running}:${data.stopRequested}`;
-    if (key !== lastProgress && data.preferenceId === version.id && window.summaryView) {
-      window.summaryView.refreshCurrent();
+    if (key !== lastProgress && data.preferenceId === version.id) {
+      if (window.summaryView) window.summaryView.refreshCurrent();
+      if (window.summaryGroups) window.summaryGroups.refresh();
     }
     lastProgress = key;
   }

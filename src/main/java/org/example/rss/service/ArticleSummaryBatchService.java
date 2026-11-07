@@ -35,6 +35,7 @@ public class ArticleSummaryBatchService {
     private final ArticleRepository articles;
     private final ArticleSummaryRepository summaries;
     private final ArticleSummaryService processor;
+    private final SourceProcessingGuard guard;
     private final ExecutorService executor = Executors.newFixedThreadPool(2);
     private final ExecutorService articleExecutor;
     private final int parallelism;
@@ -45,12 +46,14 @@ public class ArticleSummaryBatchService {
 
     public ArticleSummaryBatchService(FeedSourceService sources, PreferenceVersionRepository preferences,
             ArticleRepository articles, ArticleSummaryRepository summaries, ArticleSummaryService processor,
+            SourceProcessingGuard guard,
             @Value("${rss.summary.parallelism:3}") int parallelism) {
         this.sources = sources;
         this.preferences = preferences;
         this.articles = articles;
         this.summaries = summaries;
         this.processor = processor;
+        this.guard = guard;
         this.parallelism = Math.max(1, Math.min(parallelism, 8));
         this.articleExecutor = Executors.newFixedThreadPool(this.parallelism);
     }
@@ -80,12 +83,14 @@ public class ArticleSummaryBatchService {
         }
 
         processor.checkConfiguration();
+        guard.acquire(sourceId);
         Batch batch = new Batch(preferenceId, preference.getVersionNumber(), ids.size());
         batches.put(sourceId, batch);
         try {
             executor.execute(() -> process(batch, sourceId, email, ids));
         } catch (RuntimeException ex) {
             batches.remove(sourceId);
+            guard.release(sourceId);
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Не вдалося запустити обробку.");
         }
         return snapshot(batch, sourceId, preferenceId, email);
@@ -112,6 +117,7 @@ public class ArticleSummaryBatchService {
         if ((batch != null && batch.running) || manualRuns.contains(sourceId)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Дочекайтеся завершення поточної порції цього джерела.");
         }
+        guard.acquire(sourceId);
         manualRuns.add(sourceId);
     }
 
@@ -128,7 +134,10 @@ public class ArticleSummaryBatchService {
         return snapshot(batch, sourceId, preferenceId, email);
     }
 
-    public synchronized void endManual(Long sourceId) { manualRuns.remove(sourceId); }
+    public synchronized void endManual(Long sourceId) {
+        manualRuns.remove(sourceId);
+        guard.release(sourceId);
+    }
 
     private PreferenceVersion checkAccess(
             Long sourceId,
@@ -179,6 +188,7 @@ public class ArticleSummaryBatchService {
                     batch.message = "Обробку перервано. Збережені результати залишилися в БД.";
                 }
             }
+            guard.release(sourceId);
         }
     }
 
