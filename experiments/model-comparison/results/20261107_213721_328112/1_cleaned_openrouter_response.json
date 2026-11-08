@@ -1,0 +1,61 @@
+{
+  "id": "gen-1794080289-Kx6efC81FR97NFqdQFKG",
+  "object": "chat.completion",
+  "created": 1794080289,
+  "model": "openai/gpt-6-luna",
+  "provider": "OpenAI",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "message": {
+        "role": "assistant",
+        "content": "[{\"article_id\":1,\"status\":\"OK\",\"generated_title\":\"Демократи обговорюють військову допомогу Україні на 15 мільярдів доларів\",\"summary_text\":\"Демократи в Конгресі США обговорюють пакет допомоги Україні обсягом близько 15 мільярдів доларів і посилення санкцій проти Росії. Серед можливих пріоритетів — підтримка енергетичного сектору, ракети-перехоплювачі, розвіддані та супутниковий зв’язок Starlink. Законодавці також хочуть переглянути санкційне законодавство й перевірити зовнішньополітичні рішення адміністрації Трампа. Водночас їхній вплив обмежений: для подолання президентського вето потрібна підтримка республіканців.\" ,\"hidden_reason\":null}]",
+        "refusal": null,
+        "reasoning": "**Creating JSON Summary**\n\nI need to produce a neutral JSON summary of 40-70 words regarding the article stating that Democrats gained control of both chambers. It seems there may be some fictional elements, so I should only report what's stated and avoid adding facts. I’ll aim for around 50 words, being careful about proposals and limitations while ensuring it’s valid JSON. Counting carefully, I think I’m at 57 words.",
+        "reasoning_details": [
+          {
+            "type": "reasoning.summary",
+            "summary": "**Creating JSON Summary**\n\nI need to produce a neutral JSON summary of 40-70 words regarding the article stating that Democrats gained control of both chambers. It seems there may be some fictional elements, so I should only report what's stated and avoid adding facts. I’ll aim for around 50 words, being careful about proposals and limitations while ensuring it’s valid JSON. Counting carefully, I think I’m at 57 words.",
+            "format": "openai-responses-v1",
+            "index": 0
+          },
+          {
+            "type": "reasoning.encrypted",
+            "data": "gAAAAABq734kZzqSY_5GhR6uH5U8f8f0IVz663Y2OyfhL3HpQ7Mpc1n5QtFpSA2SoMLITx09Gnc_ZQNPGZ8IvDVBZwo6mCYMcZW-dIfU-FDfT_cxEP9SJTHtJ8bC3QWs1PA8ppZIRJpQu7c9tUMWTD3wIQ8gaDTYkO-pTOcNJTXYcd24tYVylQmeCWbIzO_B0ThGtTH5Y0NL4klpx39GTwLHld08Rd91VJ782o7R5bC4GhV3XcSs2ym9sxn5jmYEHFTSSxj6EY-cezJo2ixlLqS8-VZZBnOKEisau7nIBuUJchWBZXUTqH6NsI1dnzMgk_3WYuGtjCrGuV6eV0qKVjiu4eN2nFJtnBoYVT5Q-8Tnh_rZRjp_P8h6vEv66cMnuN5A1kkk_GRqIuaURw98lnLOyQB3Knhgo8dZQTGMvZxHr20s-NQ3VII0TzkSz3qhtZ3KHBgsXu6gRpr5E6zuk6aJ1fQBfkMyR8vIg4Si8OO99u5nerzhTh55WhFpHLSHbHZZqdJSNyqxPUbWb5_mqresVlhc0b8zL1JpiaBo8rag3vlv2fH4VVkZ0YdzP3-b_UddXVgth8rf3pNFntBsloacmBOfXYoqwA1J67lOYV6ww7Af5F_bxIyacMyE3nb1WT3KNt50FoF6y_2kn0Nca-z2dv8v1QAp1Q-jEWiGVNjmNs5YLyHq8T0-AziP268vS9I2lIW0K9Brxi5suFeGP2pbCF6RFty9_2GSFSEGx5uAVDkFsBO0-jAx7RmAeZGE36GNqnPLwHjvsJFadNid8b5vD_MuMUIT-JaBCmo9bJmFR-bvPRmtM31K27K9DEAau3yWHBk0QymkZo8ItjKRvPDtTsXRXDDoUwr0h4K0b70ZOnrfdIinm45_DVXlCXEgMKrqeidd_wCmhFT3g9UnuCPNaYlw7KEW1OJ9WO1HBfZd1tsgnRUTgCXJ3UK0fnQY5-EjSy1Ie-hpfuznhoaVYbSx7dTKLJRkNedaAmPiXCty24CQ4PTYkcXn0o6SPpd3CbzUVsO36fSBzg2yOno5fRJPUFj6ewtcZNMS7XS6WBnBz-vvLLDwZTV34mveSUiwq5EyiGUBwMrYTt7cnHlVejnLMvZIWbwwY3Yw7Fz2EF2gXGtL7Vn44Rib0rrBuIJvPU7kliec6AxgNeDtBpskrAHJDkmprc46XzMZZ68H6eomaJJSba9T2PxB_6GPwHMqFXBopPRLdW0M-FVPda4VSPVr-VcyEMtl_nxAPOMM2oMk-Rx8CEYkvNqaFgZtwMd_fK6ArS-sOPbjg49dyWMnwUfSy5WO4rTYeS-Z8dhjhPm9nxkQFJWG7NExxYy9c67oSZ6CIe7nL0zQh48RmXEJ5RaXC_KwteSCpnsbxD2zynTE9LAoMqJI3I9Cz3H0med_ZnC339c3x5TP7UjOvyBjPcYkl2ugAOCgH3B7_NDIw4-9Wq9Uaa2HfKbmsaCh9rSPhwgrQsxZCrRv1SLnBw1IvoYgCmi1hH7h1PkdvQ2po8AIlNMCcPkoye3B214saowQR0OBPDm16IlNuaLN3xQLMzUGNSxjpazPuyzIgb8IcyyTHqHR5pUHiZxPLt-Pfjm5EnkIhqbonq5u-cLC3njMoX3c0EQ-BVlb_BeZw41BSC6p0KqGgW4uZhLytgR9WPAM_TaiWW41tFNHCWnpYURrXksoYfEEEklJLDgpSXKKuf5CrtIminZtCRhrE-45KbHv1wD2TRxVUuFVjRox7oBOin1l58coAxbJzlEVqO6tFq6mslHgxEsqCHSgetncFJd4iBOsXSVj3ktonFqX79I4S-7Y4NfMhQLx6ql8SV-r0hnSi7MR16oeN5hd3fHVOD2bFG58wxGIoHuKffcRBeVv4IZ5flxhDltiaFUbHpEqnRJ-woVJfpPeNsdIl8VEOhaLosEuyADKWM4mYrtSjt9mUQXzX7oUr6uH_Or-JeGoKVDQ28l7_8wrj13uBnFyFDQqg4_wEcl5gocLCaBH3F7GDF6cqNXCd67t_I9DMxtohtEONIntd3lBGLapom1h3f_01bfdUiF4rxx4WUouRfPPjzKGrkCfwu0gySJtmYJXp5tvIFoF_wgV3y8YTWkC9UihIhxb284o0vThQcrmKXMgpZio1wrn0y3qgYlo82nLJAjgsTLLdYwncvkpYcjj4xrB2DGS-hZwnWGiX1DXQEI55BoipfXFpLBCZNYiIX7lbVfAzrG22ilIGNB5DBFT1ywS5GcP3Oety2LORDKOtYJHrOPrimRBnafPMdihRG3ohiA6TsRLukhMvMfMMujxCrzE1Wg11au_5zOYLjlTxbWjeMRex4Vijo0mzAp602VQNfzimy9TS6rfMb3Ke_BwrTqejTCDN9gTTCv4hMhxhy9Zxc20G3a1CdW6U9RKncx206j--7JftigMiGb6Gthz5vntrttMeclfO6NvSSPjLPlxFw1sImlelR8wE4nD1JqNeH-HWNbZTnYemI9DaWn_BTkX_35XGTs0sqEqrXbVxkKBW0wVix5558UuidD8p8zZjZmYUkaN0HKwVi8WcIuLnJ2eGvXaAGCAFoocEsdEMeg-N3DLcaDykMSd_WV0u6K7To2H8-bZjcOaNZykldOcjR_Ds3IicYVudeRTmNc2pynvUA1Mwv6LOgMoXZWZ023KGQMPLY9ptZEQm9Q=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+            "format": "openai-responses-v1",
+            "id": "rs_0a2e21ce763d6dd0016aef7e22228887d19fdd7aaa386988db",
+            "index": 1
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 1201,
+    "completion_tokens": 273,
+    "total_tokens": 1474,
+    "cost": 0.00028655,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 1198,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00028655,
+      "upstream_inference_prompt_cost": 0.00015005,
+      "upstream_inference_completions_cost": 0.0001365
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 70,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

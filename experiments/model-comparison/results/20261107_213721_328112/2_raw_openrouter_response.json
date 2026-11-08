@@ -1,0 +1,61 @@
+{
+  "id": "gen-1794080313-HcSvMGwKOyRYPwsG66nD",
+  "object": "chat.completion",
+  "created": 1794080313,
+  "model": "openai/gpt-6-luna",
+  "provider": "OpenAI",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "message": {
+        "role": "assistant",
+        "content": "[{\"article_id\":2,\"status\":\"OK\",\"generated_title\":\"Німеччина вичерпала можливості постачати Україні системи Patriot\",\"summary_text\":\"Міністр оборони Німеччини Борис Пісторіус заявив, що Берлін наразі не може передавати Україні додаткові системи Patriot і ракети до них. За його словами, нові поставки створили б прогалини в оборонних можливостях Німеччини, які поки не буде чим компенсувати. Пісторіус закликав інші країни активніше долучатися до посилення ППО України. Це питання планують обговорити на засіданні Контактної групи в середині листопада.\" ,\"hidden_reason\":null}]",
+        "refusal": null,
+        "reasoning": "**Creating a JSON summary**\n\nI need to produce a JSON object in Ukrainian that's between 40 to 70 words. I'll make sure to summarize the key facts, aiming for around 56 words. It’s essential to include a title and verify that the JSON structure is valid. I’ll take my time to ensure clarity and accuracy since I want to present the information well. Let’s get started!",
+        "reasoning_details": [
+          {
+            "type": "reasoning.summary",
+            "summary": "**Creating a JSON summary**\n\nI need to produce a JSON object in Ukrainian that's between 40 to 70 words. I'll make sure to summarize the key facts, aiming for around 56 words. It’s essential to include a title and verify that the JSON structure is valid. I’ll take my time to ensure clarity and accuracy since I want to present the information well. Let’s get started!",
+            "format": "openai-responses-v1",
+            "index": 0
+          },
+          {
+            "type": "reasoning.encrypted",
+            "data": "gAAAAABq7347nKb48KnJqlIHGybLSOr6dZ9MP1u5FOD8AeB843TAVzXIK3HHd2-91YZXtm_I8MoY3a-LItW5eevERL0CLCFPd3FhUiaVq1jtb6sLlpoDEasGjVQHDEE8i9eGkhl-4ris5XF-9Nsmt46kxGjn2ANZTecaJdHbdDugRN6YXPzALYidycsqzTI4HfsavUOMLyfc9OCLPUV1JkmCDt9q910shdwsB0JDvgEIz9mXNvhbqndPY95KmmolCjCiS5xepNKvjNQgvxhefRNgJqixUwk_rWnWKuNSXg1dU92dCVp9g-woAFGk19eO_JLWr0tJg6LYxR4NC3h4OmjIepmgiTtpEkQ0oYq1wmjh2YOwpXVCUlEieQf8JYQ8ken_7c8wSJY1_3vtYbQM89O6qz-cfxuJjl7cHGY_TOs-KEmIr9csvfF2ipozxTBhZrH6mSEt_pxla-E3hB01LSuUNylvbe4w1H6Z3-Y-AUWsM2be2nIlmThfPdBRQVyKTWoEKvHdLmeu70B9OZfeYXzZrywjHA6lWJW7KMFMUoaUtOWPhc8X3cPsIqCKNn_Ex5OZoPbqc7LvXBnCmqd9SapyV3rPgXxdTdPca7bn_wTm_TH6B8iGud6olaZPaKFsMefRSMZ7SunhA3xe4m15Qna4Uj36SyArgowFfL0J2eOPJuzzOmkdsXHZKZBmxxHPzmxWt86g64BdrqAOw7CUsM1rMcEdFFhT6VtSvDXtotAlV-1IvtETeNdETDYqqonkq2vfypomIr2VD_t0Ci2N10-5ILmG7nPYfqhuXD-DsFhAczUdAlVj_GuGMk1TWTR18SDTpGKxB_6jEFL7pRjEtW7k7S93h7UTSy8uPz5gIsN5xc8ffX03VCAh5rE16jdTTGvOeEkCtiVDNrNRmrcNY8uzN2mxhrujMU7MIlq92JGqvgWhMb5VsUshWmQ-ujSsgZ6_71n4dqcyMVhzw3kH12iEQ4B7_yw7zPdDiqYgUNn82p_UA45EjkLtoCCqrTqxuBjnRdhegNI9Mh_e3WNLX567f5-GgZi8KoQoyrR9ZpYb3e-YnvGF4hMfppGAh40XdC-UUYPuyn_Avzf37iJxQ6SpI5L_ka8vcpbdKlJLrXdZGaUGZe34ccSjwRdO1V1TxYZBpP9DBRqBRAv446sm_idYMBC-T14ifI_JvzfaZ2z-ROiI3lDNUsTMRPayQcrYS2X7L-L1DC0hb-El5vpc4_-tQ2WnR4QpNnD78D-v6Hf17lxkQqogsRqJhs_2shxDVtjh8R1zDQEssiNBTekDHNwJFb5VrdX6d55mx_k0M2WRoLanICSy39a6nw-c4JvKsgqe70CHcA_Cs_nv6LZOEStvtwXSi5caA-QnoyOS4RtItWrY704s8bSw0Cm1MidgSbM0apMUtedUKzr-quVkeS9Zgf41qlavJq8Sw5zOZZFt-nhHeEquxHprJYWQusksKerazI2aF69GWYb2YtSc8shONc4oVBKRaebGUxP8zSh19lyL0mVH2c8IyEZN5YbcSymgLeENovDtvnqVk-JKIBy7UT2D-BAvVtg0I5OwiQ9xoPhV-J_KweiNU-hKg0QQME3umLz3Xhy8j_1IhWteqF_chW8sxXY2ZeH5h47iAk9Cy0x27YjoVN7g_s4MlIaz1l2uihxdtieYd-4ZtX3NZpPafcNSswIq5pkxMnywiTgfx_XRudCD6Ivywx0PY7ab91UZY24_NS41Q9q02Phicgbj9wNFYWACtEbhyMpHh71FJNgIOq81ZajI5CgyuG9oqAgPFvv-CR81vRTFhy7TIZ4Rmg-167uahqZuHwCIpKPTBh77whVU3ce41x3DnWA6KTYmJ5XIIE3JShg9J1fe6z5GaN6K2sjjQOebOBdTYOUBDkyma3ehJDolOK0BTk93o4at5F0tJxTtJLkqqWscTgfPKOplpku1RG1W9SxUEMgKmcTxlPjm9m7ViF7wyEf-5BZ0KoPsyZ75WyvAsRUE4QI1Kv40Xso2elBgXjl29bGUxCUJW0Q9vbQbdXN920klUDHFh5gytIRqEocb2rFr3z1xzLT6UhKzlBKngankSBX3r0AtOmM4uzxs1HhHw4LCnAovV4OcehDiBgqJ2csabtPq7PsD5k5JiQ==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+            "format": "openai-responses-v1",
+            "id": "rs_05f732904c36dda5016aef7e3aa13087d188ad92cea27e546f",
+            "index": 1
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5162,
+    "completion_tokens": 210,
+    "total_tokens": 5372,
+    "cost": 0.000750175,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 5159,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.000750175,
+      "upstream_inference_prompt_cost": 0.000645175,
+      "upstream_inference_completions_cost": 0.000105
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 31,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

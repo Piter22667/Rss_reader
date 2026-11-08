@@ -1,0 +1,11 @@
+{
+  "article_id": 1,
+  "provider": "local",
+  "variant": "cleaned",
+  "requested_model": "lfm3:1.7b",
+  "returned_model": "lfm3:1.7b",
+  "truncated": false,
+  "structure_ok": false,
+  "validation_error": "Extra data: line 7 column 1 (char 2440)",
+  "seconds": 15.53
+}
